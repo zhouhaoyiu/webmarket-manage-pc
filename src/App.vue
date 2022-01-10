@@ -10,9 +10,7 @@ import Component from "vue-class-component";
 })
 export default class App extends Vue {
   mounted(): void {
-    if (!localStorage.getItem("userUUid")) {
-      this["$router"].push("/Login");
-    }
+    this["$router"].push("/home");
   }
 }
 </script>
@@ -26,6 +24,5 @@ export default class App extends Vue {
   padding: 0px;
   width: 100%;
   height: 100%;
-  display: flex;
 }
 </style>
