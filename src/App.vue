@@ -10,7 +10,7 @@ import Component from "vue-class-component";
 })
 export default class App extends Vue {
   mounted(): void {
-    this["$router"].push("/home");
+    this["$router"].push("/login");
   }
 }
 </script>

@@ -8,26 +8,26 @@
         label-position="left"
         label-width="100px"
       >
-        <el-form-item label="用户名" prop="username">
-          <el-input v-model="formData.username" type="text"></el-input>
+        <el-form-item label="用户名" prop="userName">
+          <el-input v-model="formData.userName" type="text"></el-input>
         </el-form-item>
-        <el-form-item label="密码" prop="password">
+        <el-form-item label="密码" prop="passWord">
           <el-input
-            v-model="formData.password"
-            type="password"
+            v-model="formData.passWord"
+            type="passWord"
             autocomplete="off"
           ></el-input>
         </el-form-item>
-        <el-form-item label="手机号" prop="mobile">
+        <el-form-item label="手机号" prop="phoneNumber">
           <el-input
-            v-model="formData.mobile"
+            v-model="formData.phoneNumber"
             type="text"
             auto-complete="off"
           ></el-input>
         </el-form-item>
-        <el-form-item label="邮箱" prop="email">
+        <el-form-item label="邮箱" prop="emailAddress">
           <el-input
-            v-model="formData.email"
+            v-model="formData.emailAddress"
             type="text"
             auto-complete="off"
           ></el-input>
@@ -35,17 +35,18 @@
         <el-form-item label="pin码" prop="pin">
           <el-input
             v-model="formData.pin"
-            type="text"
+            type="passWord"
             auto-complete="off"
           ></el-input>
         </el-form-item>
       </el-form>
-      <el-button type="primary">注册管理员</el-button>
+      <el-button type="primary" @click="adminRegis()">注册管理员</el-button>
     </div>
   </div>
 </template>
 
 <script lang="ts">
+import { JSEncrypt } from "jsencrypt";
 import Vue from "vue";
 import Component from "vue-class-component";
 
@@ -54,10 +55,10 @@ import Component from "vue-class-component";
 })
 export default class Regis extends Vue {
   private formData = {
-    username: "",
-    password: "",
-    mobile: "",
-    email: "",
+    userName: "",
+    passWord: "",
+    phoneNumber: "",
+    emailAddress: "",
     pin: "",
   };
   private checkPhone = (
@@ -119,22 +120,22 @@ export default class Regis extends Vue {
   };
 
   private rules = {
-    username: [
+    userName: [
       { required: true, message: "请输入用户名", trigger: "blur" },
-      { min: 3, max: 5, message: "长度在 3 到 5 个字符", trigger: "blur" },
+      { min: 3, max: 15, message: "长度在 3 到 15 个字符", trigger: "blur" },
     ],
-    password: [
+    passWord: [
       { required: true, message: "请输入密码", trigger: "blur" },
       { min: 6, max: 18, message: "长度在 6 到 18 个字符", trigger: "blur" },
     ],
-    mobile: [
+    phoneNumber: [
       {
         required: true,
         trigger: "blur",
         validator: this.checkPhone,
       },
     ],
-    email: [
+    emailAddress: [
       {
         required: true,
         trigger: "blur",
@@ -149,6 +150,39 @@ export default class Regis extends Vue {
       },
     ],
   };
+  get sendFormData(): {
+    userName: string;
+    passWord: string;
+    phoneNumber: string;
+    emailAddress: string;
+    pin: string;
+  } {
+    let { userName, passWord, phoneNumber, emailAddress, pin } = this.formData;
+    const jsencrypt = new JSEncrypt();
+    jsencrypt.setPublicKey(localStorage.getItem("publicKey") || "");
+    passWord = String(jsencrypt.encrypt(passWord));
+    const form = {
+      userName,
+      passWord,
+      phoneNumber,
+      emailAddress,
+      pin,
+    };
+    return form;
+  }
+  private async adminRegis() {
+    const res = await this["axios"].post("admin/adminRegis", this.sendFormData);
+    console.log(res);
+    if (res.data["code"] === "0") {
+      this["$message"]({
+        message: "注册成功",
+        type: "success",
+      });
+      // this["$router"].push("/");
+    } else {
+      this["$message"].error(res.data.msg);
+    }
+  }
 }
 </script>
 

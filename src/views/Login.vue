@@ -44,13 +44,28 @@ export default class Login extends Vue {
   private username = "";
   private password = "";
 
-  private login(): void {
+  private async login(): Promise<void> {
     const jsencrypt = new JSEncrypt();
     jsencrypt.setPublicKey(localStorage.getItem("publicKey") || "");
-    this["axios"].post("admin/adminLogin", {
+    const res = await this["axios"].post("admin/adminLogin", {
       userName: this.username,
       passWord: jsencrypt.encrypt(this.password),
     });
+    if (res.data["code"] === "0") {
+      // localStorage.setItem("token", res.data.data.token);
+      localStorage.setItem("userName", res.data.data.userName);
+      localStorage.setItem("userUUid", res.data.data.adminUUid);
+      this["$message"]({
+        message: "登录成功",
+        type: "success",
+      });
+    } else {
+      this["$message"]({
+        message: res.data.msg,
+        type: "error",
+      });
+    }
+    // this["$router"].push("/home");
     // this["$router"].push("/Home");
     // localStorage.setItem("userUUid", this.username);
   }
