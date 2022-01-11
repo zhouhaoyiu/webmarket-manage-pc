@@ -21,6 +21,13 @@
           @click="login()"
           >登录</el-button
         >
+        <el-button
+          class="login-button"
+          size="medium"
+          type="primary"
+          @click="regis()"
+          >注册</el-button
+        >
       </div>
     </div>
   </div>
@@ -39,13 +46,17 @@ export default class Login extends Vue {
 
   private login(): void {
     const jsencrypt = new JSEncrypt();
-    jsencrypt.setPublicKey(localStorage.getItem("publicKey"));
-    this["$axios"].post("http://localhost:8090/admin/adminLogin", {
+    jsencrypt.setPublicKey(localStorage.getItem("publicKey") || "");
+    this["axios"].post("admin/adminLogin", {
       userName: this.username,
       passWord: jsencrypt.encrypt(this.password),
     });
     // this["$router"].push("/Home");
     // localStorage.setItem("userUUid", this.username);
+  }
+
+  private regis(): void {
+    this["$router"].push("/regis");
   }
   mounted(): void {
     //

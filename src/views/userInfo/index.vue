@@ -2,7 +2,7 @@
   <div>21321</div>
 </template>
 
-<script>
+<script lang="ts">
 import Vue from "vue";
 import Component from "vue-class-component";
 
@@ -10,7 +10,7 @@ import Component from "vue-class-component";
   components: {},
 })
 export default class userInfo extends Vue {
-  mounted() {
+  mounted(): void {
     console.log(1232112);
   }
 }

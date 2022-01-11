@@ -29,11 +29,11 @@ export default class Home extends Vue {
   }
   async mounted(): Promise<void> {
     if (!localStorage.getItem("userUUid")) {
-      this["$router"].push("/Login");
+      this["$router"].push("/login");
     }
 
     let publicKey: { [x: string]: string; data: string };
-    publicKey = await this["$axios"].get("http://localhost:8090/rsa/pubKey");
+    publicKey = await this["axios"].get("rsa/pubKey");
     if (String(publicKey["status"]) === "200") {
       localStorage.setItem("publicKey", publicKey.data);
     }
