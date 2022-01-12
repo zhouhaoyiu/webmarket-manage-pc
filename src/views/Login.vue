@@ -36,6 +36,7 @@
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
 import { JSEncrypt } from "jsencrypt";
+import { SET_USER_UUID } from "@/store/type/mutation-type";
 
 @Component({
   components: {},
@@ -54,20 +55,18 @@ export default class Login extends Vue {
     if (res.data["code"] === "0") {
       // localStorage.setItem("token", res.data.data.token);
       localStorage.setItem("userName", res.data.data.userName);
-      localStorage.setItem("userUUid", res.data.data.adminUUid);
+      this.$store.commit(SET_USER_UUID, res.data.data.userUUid);
       this["$message"]({
         message: "登录成功",
         type: "success",
       });
+      this["$router"].push("/home");
     } else {
       this["$message"]({
         message: res.data.msg,
         type: "error",
       });
     }
-    // this["$router"].push("/home");
-    // this["$router"].push("/Home");
-    // localStorage.setItem("userUUid", this.username);
   }
 
   private regis(): void {

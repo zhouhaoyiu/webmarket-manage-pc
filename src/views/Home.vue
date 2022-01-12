@@ -1,10 +1,12 @@
 <template>
   <div class="home">
     <div class="sideBar">
-      <div>欢迎您</div>
-      <div>{{ userName }}</div>
+      <div class="info">
+        <div class="info-title">欢迎您</div>
+        <div class="info-name">{{ userName }}</div>
+      </div>
       <div class="buttons">
-        <div class="muInfo">
+        <div class="button">
           <button @click="goPage('userInfo')">个人信息</button>
         </div>
       </div>
@@ -45,13 +47,50 @@ export default class Home extends Vue {
 .home {
   display: flex;
   flex-direction: wrap;
+  width: 100%;
+  height: 100%;
   .sideBar {
     display: flex;
     flex-direction: column;
     background-color: black;
     color: #fff;
     height: 100%;
-    padding: 0 20px;
+    width: 200px;
+    .info {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 20px 0;
+      .info-title {
+        font-size: 20px;
+        font-weight: bold;
+      }
+      .info-name {
+        font-size: 16px;
+      }
+    }
+    .buttons {
+      display: flex;
+      width: 100%;
+      flex-direction: column;
+      .button {
+        display: flex;
+        flex-direction: row;
+        width: 100%;
+        height: 40px;
+        justify-content: space-between;
+        button {
+          width: 100%;
+          height: 100%;
+          border: none;
+          background-color: blue;
+          color: #fff;
+          font-size: 14px;
+          cursor: pointer;
+        }
+      }
+    }
   }
 }
 </style>

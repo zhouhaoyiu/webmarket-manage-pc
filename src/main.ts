@@ -1,4 +1,5 @@
 import Vue from "vue";
+import Vuex from "vuex";
 import App from "./App.vue";
 import router from "./router";
 import store from "./store";
@@ -12,6 +13,7 @@ Vue.prototype.$axios = axios;
 Vue.use(ElementUI);
 Vue.prototype.$axios.defaults.baseURL = "http://localhost:8090/";
 Vue.use(VueAxios, axios);
+Vue.use(Vuex);
 
 new Vue({
   router,

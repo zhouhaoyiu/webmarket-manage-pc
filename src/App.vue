@@ -9,9 +9,9 @@ import Component from "vue-class-component";
   components: {},
 })
 export default class App extends Vue {
-  mounted(): void {
-    this["$router"].push("/login");
-  }
+  // mounted(): void {
+  //   this["$router"].push("/login");
+  // }
 }
 </script>
 
