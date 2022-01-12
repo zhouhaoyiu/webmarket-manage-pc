@@ -1,5 +1,3 @@
-const state = {
-  userUUid: "",
-};
+import { adminInfoType } from "@/types/type";
 
-export default state;
+export const adminInfo = {} as adminInfoType;

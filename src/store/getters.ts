@@ -1,6 +1,3 @@
-import { GET_USER_UUID } from "./type/getter-type";
-const getters = {
-  [GET_USER_UUID]: (state: { userUUid: string }): string => state.userUUid,
-};
+import { adminInfoType } from "@/types/type";
 
-export default getters;
+export const getAdminInfo = (state: any): adminInfoType => state.adminInfo;

@@ -36,7 +36,7 @@
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
 import { JSEncrypt } from "jsencrypt";
-import { SET_USER_UUID } from "@/store/type/mutation-type";
+import { SET_ADMIN_INFO } from "@/store/type/mutation-type";
 
 @Component({
   components: {},
@@ -46,6 +46,11 @@ export default class Login extends Vue {
   private password = "";
 
   private async login(): Promise<void> {
+    let publicKey: { [x: string]: string; data: string };
+    publicKey = await this["axios"].get("rsa/pubKey");
+    if (String(publicKey["status"]) === "200") {
+      localStorage.setItem("publicKey", publicKey.data);
+    }
     const jsencrypt = new JSEncrypt();
     jsencrypt.setPublicKey(localStorage.getItem("publicKey") || "");
     const res = await this["axios"].post("admin/adminLogin", {
@@ -55,7 +60,8 @@ export default class Login extends Vue {
     if (res.data["code"] === "0") {
       // localStorage.setItem("token", res.data.data.token);
       localStorage.setItem("userName", res.data.data.userName);
-      this.$store.commit(SET_USER_UUID, res.data.data.userUUid);
+      localStorage.setItem("UUid", res.data.data.adminUUid);
+      this.$store.commit(SET_ADMIN_INFO, res.data.data);
       this["$message"]({
         message: "登录成功",
         type: "success",

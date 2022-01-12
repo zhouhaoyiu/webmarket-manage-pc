@@ -1,1 +1,1 @@
-export const GET_USER_UUID = "getUserUUid";
+export const GET_ADMIN_INFO = "getAdminInfo";

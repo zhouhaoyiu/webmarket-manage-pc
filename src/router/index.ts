@@ -23,17 +23,25 @@ const routes: Array<RouteConfig> = [
             /* webpackChunkName: "userInfo" */ "../views/userInfo/index.vue"
           ),
       },
+      {
+        path: "/home/adminManage",
+        name: "adminManage",
+        component: () =>
+          import(
+            /* webpackChunkName: "adminManage" */ "../views/adminManage/index.vue"
+          ),
+      },
     ],
   },
-  {
-    path: "/about",
-    name: "About",
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () =>
-      import(/* webpackChunkName: "about" */ "../views/About.vue"),
-  },
+  // {
+  //   path: '/about',
+  //   name: 'About',
+  //   // route level code-splitting
+  //   // this generates a separate chunk (about.[hash].js) for this route
+  //   // which is lazy-loaded when the route is visited.
+  //   component: () =>
+  //     import(/* webpackChunkName: "about" */ '../views/About.vue')
+  // },
   {
     path: "/login",
     name: "Login",
@@ -51,6 +59,18 @@ const routes: Array<RouteConfig> = [
     // which is lazy-loaded when the route is visited.
     component: () =>
       import(/* webpackChunkName: "Regis" */ "../views/Regis.vue"),
+  },
+  {
+    path: "/404",
+    name: "404",
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import(/* webpackChunkName: "404" */ "../views/404.vue"),
+  },
+  {
+    path: "*",
+    redirect: "/404",
   },
 ];
 

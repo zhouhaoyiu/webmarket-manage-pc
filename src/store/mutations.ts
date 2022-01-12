@@ -1,9 +1,5 @@
-import { SET_USER_UUID } from "./type/mutation-type";
+import { adminInfoType } from "@/types/type";
 
-const mutations = {
-  [SET_USER_UUID](state: { userUUid: string }, uuid: string): void {
-    state.userUUid = uuid;
-  },
+export const setAdminInfo = function (state: any, info: adminInfoType): void {
+  state.adminInfo = info
 };
-
-export default mutations;

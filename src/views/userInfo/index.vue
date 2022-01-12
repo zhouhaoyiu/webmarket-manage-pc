@@ -1,17 +1,23 @@
 <template>
-  <div>21321</div>
+  <div>
+    {{ userInfo }}
+  </div>
 </template>
 
 <script lang="ts">
 import Vue from "vue";
 import Component from "vue-class-component";
-
+import { adminInfoType } from "@/types/type";
+import { GET_ADMIN_INFO } from "@/store/type/getter-type";
 @Component({
   components: {},
 })
 export default class userInfo extends Vue {
   mounted(): void {
-    console.log(1232112);
+    //
+  }
+  get userInfo(): adminInfoType {
+    return this.$store.getters[GET_ADMIN_INFO];
   }
 }
 </script>

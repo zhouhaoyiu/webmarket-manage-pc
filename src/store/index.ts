@@ -1,15 +1,24 @@
 import Vue from "vue";
 import Vuex from "vuex";
-import getters from "./getters";
-import mutations from "./mutations";
-import state from "./state";
+import createVuexAlong from "vuex-along";
+import { adminInfo } from "./state";
+import { getAdminInfo } from "./getters";
+import { GET_ADMIN_INFO } from "./type/getter-type";
+import { setAdminInfo } from "./mutations";
+import { SET_ADMIN_INFO } from "./type/mutation-type";
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
-  state,
-  getters,
-  mutations,
+  state: {
+    adminInfo: adminInfo
+  },
+  getters: {
+    [GET_ADMIN_INFO]: getAdminInfo
+  },
+  mutations: {
+    [SET_ADMIN_INFO]: setAdminInfo
+  },
   actions: {},
-  modules: {},
+  plugins: [createVuexAlong()]
 });
