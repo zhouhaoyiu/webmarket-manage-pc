@@ -1,6 +1,6 @@
 <template>
   <div>
-    {{ userInfo }}
+    {{ userName }}
   </div>
 </template>
 
@@ -18,6 +18,10 @@ export default class userInfo extends Vue {
   }
   get userInfo(): adminInfoType {
     return this.$store.getters[GET_ADMIN_INFO];
+  }
+
+  get userName(): string {
+    return this.$store.getters[GET_ADMIN_INFO].userName;
   }
 }
 </script>

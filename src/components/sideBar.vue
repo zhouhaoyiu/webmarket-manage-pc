@@ -6,20 +6,30 @@
       <div class="info-name">{{ identity }}</div>
     </div>
     <div class="buttons">
-      <div class="button">
+      <!-- <div class="button" :style="$route.path ===">
         <button @click="$emit('goPage', 'userInfo')">个人信息</button>
-        <button @click="$emit('goPage', 'adminManage')">管理员管理</button>
+        <button @click="$emit('goPage', 'adminsManage')">管理员管理</button>
+        <button @click="$emit('goPage', 'customersManage')">顾客管理</button>
+      </div> -->
+      <div
+        class="button"
+        v-for="(button, buttonIndex) in calcButtonArr"
+        :class="routePath === button.path ? 'active' : ''"
+        :key="button.name"
+      >
+        <button @click="emitGoPage(button.path, buttonIndex)">
+          {{ button.name }}
+        </button>
       </div>
     </div>
-    <div>
-      <div class="logout">
-        <button @click="logOut()">登出</button>
-      </div>
+    <div class="sideBar-foot">
+      <el-button type="primary" @click="$emit('logOut')">登出</el-button>
     </div>
   </div>
 </template>
 
 <script lang="ts">
+import { GET_ADMIN_INFO } from "@/store/type/getter-type";
 import Vue from "vue";
 import { Component, Prop } from "vue-property-decorator";
 
@@ -31,6 +41,36 @@ export default class SideBar extends Vue {
   @Prop() identity!: string;
   @Prop() goPage!: (page: string) => void;
   @Prop() logOut!: () => void;
+
+  private buttonArr = [
+    {
+      name: "个人信息",
+      path: "userInfo",
+      role: 1,
+    },
+    {
+      name: "管理员管理",
+      path: "adminsManage",
+      role: 0,
+    },
+    {
+      name: "顾客管理",
+      path: "customersManage",
+      role: 1,
+    },
+  ];
+
+  private emitGoPage(path: string, index: number): void {
+    this.$emit("goPage", path);
+  }
+  get routePath(): string {
+    return this.$route.path.split("/")[2];
+  }
+  get calcButtonArr(): any[] {
+    return this.buttonArr.filter((button: any) => {
+      return button.role >= this.$store.getters[GET_ADMIN_INFO].adminRole;
+    });
+  }
 }
 </script>
 
@@ -38,8 +78,8 @@ export default class SideBar extends Vue {
 .sideBar {
   display: flex;
   flex-direction: column;
-  background-color: whitesmoke;
-  color: brown;
+  background-color: rgb(192, 192, 192);
+  color: #021146;
   height: 100%;
   width: 200px;
   min-width: 200px;
@@ -49,37 +89,67 @@ export default class SideBar extends Vue {
     justify-content: center;
     align-items: center;
     padding: 20px 0;
+    height: 160px;
     .info-title {
+      margin-bottom: 10px;
       font-size: 20px;
       font-weight: bold;
     }
     .info-name {
+      margin-bottom: 10px;
       font-size: 16px;
     }
   }
   .buttons {
     display: flex;
     width: 100%;
+    height: 70%;
     flex-direction: column;
     .button {
       display: flex;
       flex-direction: column;
       width: 100%;
       justify-content: space-between;
+      margin-top: 5px;
       button {
         width: 100%;
         height: 40px;
         border: none;
         background-color: transparent;
         // border-top: 1px solid brown;
-        border-bottom: 1px solid brown;
+        border-top: 1px solid #021146;
+        border-bottom: 1px solid #021146;
         color: black;
         font-size: 14px;
         cursor: pointer;
       }
-      button:nth-child(1) {
-        border-top: 1px solid brown;
+    }
+    .active {
+      background: #021146 !important;
+      font-weight: bold;
+      button {
+        color: #fff !important;
       }
+    }
+  }
+  .sideBar-foot {
+    display: flex;
+    width: 100%;
+    height: calc(30% - 160px);
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    button {
+      width: 80%;
+      height: 40px;
+      // background-color: blue;
+      // border: none;
+      border-radius: 6px;
+      // // border-top: 1px solid brown;
+      // color: #fff;
+      // font-size: 14px;
+      // cursor: pointer;
     }
   }
 }

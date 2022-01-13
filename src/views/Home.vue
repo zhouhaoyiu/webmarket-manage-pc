@@ -6,7 +6,7 @@
       @goPage="goPage"
       @logOut="logOut"
     ></side-bar>
-    <router-view></router-view>
+    <router-view style="padding:2% 3%"></router-view>
   </div>
 </template>
 

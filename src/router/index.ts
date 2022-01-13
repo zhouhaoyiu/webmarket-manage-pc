@@ -24,11 +24,19 @@ const routes: Array<RouteConfig> = [
           ),
       },
       {
-        path: "/home/adminManage",
-        name: "adminManage",
+        path: "/home/adminsManage",
+        name: "adminsManage",
         component: () =>
           import(
-            /* webpackChunkName: "adminManage" */ "../views/adminManage/index.vue"
+            /* webpackChunkName: "adminsManage" */ "../views/adminsManage/index.vue"
+          ),
+      },
+      {
+        path: "/home/customersManage",
+        name: "customersManage",
+        component: () =>
+          import(
+            /* webpackChunkName: "customersManage" */ "../views/customersManage/index.vue"
           ),
       },
     ],
