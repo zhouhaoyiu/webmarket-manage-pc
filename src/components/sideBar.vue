@@ -14,11 +14,12 @@
       <div
         class="button"
         v-for="(button, buttonIndex) in calcButtonArr"
-        :class="routePath === button.path ? 'active' : ''"
+        :class="getActiveClass(button.strict, button.path)"
         :key="button.name"
       >
         <button @click="emitGoPage(button.path, buttonIndex)">
           {{ button.name }}
+          <!-- {{ getActiveClass(button.strict, button.path) }} -->
         </button>
       </div>
     </div>
@@ -32,7 +33,7 @@
 import { GET_ADMIN_INFO } from "@/store/type/getter-type";
 import Vue from "vue";
 import { Component, Prop } from "vue-property-decorator";
-
+import { btn } from "./type";
 @Component({
   components: {},
 })
@@ -44,8 +45,18 @@ export default class SideBar extends Vue {
 
   private buttonArr = [
     {
+      name: "首页",
+      path: "index",
+      role: 1,
+    },
+    {
       name: "个人信息",
       path: "userInfo",
+      role: 1,
+    },
+    {
+      name: "商城管理",
+      path: "mallManage",
       role: 1,
     },
     {
@@ -58,18 +69,62 @@ export default class SideBar extends Vue {
       path: "customersManage",
       role: 1,
     },
+    {
+      name: "订单管理",
+      path: "ordersManage",
+      role: 1,
+    },
+    {
+      name: "商品管理",
+      path: "goodsManage",
+      role: 1,
+    },
+    {
+      name: "商品分类管理",
+      path: "goodsCategoryManage",
+      role: 1,
+    },
+    {
+      name: "用户统计",
+      path: "usersStatistics",
+      role: 1,
+    },
+    {
+      name: "商品统计",
+      path: "goodsStatistics",
+      role: 1,
+    },
   ];
 
   private emitGoPage(path: string, index: number): void {
     this.$emit("goPage", path);
   }
-  get routePath(): string {
-    return this.$route.path.split("/")[2];
+
+  private getActiveClass(
+    strict = false,
+    path: string
+  ): { active: boolean } | string {
+    if (this.routePath === (strict ? path.split("/")[1] : path)) {
+      return {
+        active: true,
+      };
+    } else {
+      return "";
+    }
   }
-  get calcButtonArr(): any[] {
-    return this.buttonArr.filter((button: any) => {
+
+  get routePath(): string {
+    return this.$route.path.split("/")[2] || "index";
+  }
+
+  get calcButtonArr(): btn[] {
+    return this.buttonArr.filter((button: btn) => {
       return button.role >= this.$store.getters[GET_ADMIN_INFO].adminRole;
     });
+  }
+
+  mounted(): void {
+    this.$router.push("/home/index");
   }
 }
 </script>
@@ -78,7 +133,7 @@ export default class SideBar extends Vue {
 .sideBar {
   display: flex;
   flex-direction: column;
-  background-color: rgb(192, 192, 192);
+  background-color: transparent;
   color: #021146;
   height: 100%;
   width: 200px;

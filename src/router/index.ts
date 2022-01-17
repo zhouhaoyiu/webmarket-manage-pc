@@ -16,6 +16,11 @@ const routes: Array<RouteConfig> = [
     component: Home,
     children: [
       {
+        path: "/home/index",
+        name: "HomeIndex",
+        component: () => import("../views/homeIndex/index.vue"),
+      },
+      {
         path: "/home/userInfo",
         name: "userInfo",
         component: () =>
@@ -39,6 +44,14 @@ const routes: Array<RouteConfig> = [
             /* webpackChunkName: "customersManage" */ "../views/customersManage/index.vue"
           ),
       },
+      {
+        path: "/home/goodsManage",
+        name: "GoodsManage",
+        component: () =>
+        import(
+          /* webpackChunkName: "goodsManage" */ "../views/goodsManage/index.vue"
+        ),
+      }
     ],
   },
   // {
