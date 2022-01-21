@@ -1,6 +1,8 @@
 <template>
   <div>
-    {{ userName }}
+    <el-descriptions title="用户信息">
+      <el-descriptions-item label="用户名">kooriookami</el-descriptions-item>
+    </el-descriptions>
   </div>
 </template>
 

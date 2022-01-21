@@ -6,7 +6,7 @@ import store from "./store";
 import axios from "axios";
 import VueAxios from "vue-axios";
 import ElementUI from "element-ui";
-import "./assets/reset.css";
+import "./assets/reset.scss";
 import "./assets/element-variables.scss";
 
 Vue.config.productionTip = false;
