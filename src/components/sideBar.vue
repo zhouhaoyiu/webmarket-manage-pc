@@ -81,7 +81,7 @@ export default class SideBar extends Vue {
     },
     {
       name: "商品分类管理",
-      path: "goodsCategoryManage",
+      path: "goodsClassificationManage",
       role: 1,
     },
     {

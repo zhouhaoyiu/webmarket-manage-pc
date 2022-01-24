@@ -11,11 +11,16 @@
       :close-on-click-modal="false"
       :close-on-press-escape="false"
       :show-close="false"
-      :center="true"
       title="新增商品信息"
       :visible.sync="addGoodsVisble"
     >
-      <el-form ref="form" :model="form" label-width="80px">
+      <el-form
+        ref="form"
+        :model="form"
+        label-position="left"
+        label-width="120px"
+        style="padding: 0 30px"
+      >
         <el-form-item label="商品名称">
           <el-input v-model="form.name"></el-input>
         </el-form-item>
@@ -47,13 +52,15 @@
         <el-form-item label="商品图片">
           <el-upload
             class="upload-demo"
-            action="https://jsonplaceholder.typicode.com/posts/"
+            action="http://localhost:8090/goods/upload/image"
             list-type="picture-card"
+            name="picture"
             :on-preview="handlePictureCardPreview"
             :on-remove="handleRemove"
             :on-success="handleAvatarSuccess"
             :before-upload="beforeAvatarUpload"
             :file-list="goodsList"
+            multiple
           >
             <i class="el-icon-plus avatar"></i>
           </el-upload>
@@ -61,13 +68,15 @@
         <el-form-item label="商品描述图片">
           <el-upload
             class="upload-demo"
-            action="https://jsonplaceholder.typicode.com/posts/"
+            action="http://localhost:8090/goods/upload/image"
             list-type="picture-card"
+            name="picture"
             :on-preview="handlePictureCardPreview"
             :on-remove="handleRemove"
             :on-success="handleAvatarSuccess"
             :before-upload="beforeAvatarUpload"
             :file-list="goodsDescribeList"
+            multiple
           >
             <i class="el-icon-plus avatar"></i>
           </el-upload>
@@ -77,6 +86,14 @@
         <el-button type="danger" @click="cancel">取消</el-button>
         <el-button type="primary" @click="submitForm('form')">提交</el-button>
       </div>
+    </el-dialog>
+    <el-dialog
+      :close-on-click-modal="false"
+      :close-on-press-escape="false"
+      :center="true"
+      :visible.sync="previewVisible"
+    >
+      <img width="100%" :src="previewImage" />
     </el-dialog>
   </div>
 </template>
@@ -114,8 +131,9 @@ export default class GoodsManage extends Vue {
   }
 
   handleAvatarSuccess(res: any, file: any) {
-    this.form.image = res.url;
-    this.goodsList = [];
+    this.form.image = res.data;
+    // this.goodsList = [];
+    console.log(res);
   }
 
   beforeAvatarUpload(file: any) {
@@ -137,7 +155,9 @@ export default class GoodsManage extends Vue {
   }
 
   handleRemove(file: any) {
-    this.goodsList = this.goodsList.filter((item: any) => item.uid !== file.uid);
+    this.goodsList = this.goodsList.filter(
+      (item: any) => item.uid !== file.uid
+    );
   }
 
   cancel() {

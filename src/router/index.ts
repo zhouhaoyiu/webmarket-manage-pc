@@ -48,10 +48,18 @@ const routes: Array<RouteConfig> = [
         path: "/home/goodsManage",
         name: "GoodsManage",
         component: () =>
-        import(
-          /* webpackChunkName: "goodsManage" */ "../views/goodsManage/index.vue"
-        ),
-      }
+          import(
+            /* webpackChunkName: "goodsManage" */ "../views/goodsManage/index.vue"
+          ),
+      },
+      {
+        path: "/home/goodsClassificationManage",
+        name: "GoodsClassificationManage",
+        component: () =>
+          import(
+            /* webpackChunkName: "goodsClassificationManage" */ "../views/goodsClassificationManage/index.vue"
+          ),
+      },
     ],
   },
   // {
