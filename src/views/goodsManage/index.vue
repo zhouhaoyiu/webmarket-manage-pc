@@ -1,5 +1,6 @@
 <template>
   <div class="goodsManage">
+    <Title>商品管理</Title>
     <div class="top-buttons">
       <el-button @click="addGoodsVisble = true" type="primary"
         >新增商品</el-button
@@ -99,10 +100,13 @@
 </template>
 
 <script lang="ts">
+import Title from "@/components/title.vue";
 import Vue from "vue";
 import Component from "vue-class-component";
 @Component({
-  components: {},
+  components: {
+    Title
+  },
 })
 export default class GoodsManage extends Vue {
   form = {

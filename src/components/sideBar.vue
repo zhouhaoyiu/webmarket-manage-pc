@@ -124,7 +124,11 @@ export default class SideBar extends Vue {
   }
 
   mounted(): void {
-    this.$router.push("/home/index");
+    if (localStorage.getItem("page")) {
+      this["$router"].push(`/home/${localStorage.getItem("page")}`);
+    } else {
+      this["$router"].push("/home/index");
+    }
   }
 }
 </script>

@@ -1,8 +1,6 @@
 <template>
   <div>
-    <el-descriptions title="用户信息">
-      <el-descriptions-item label="用户名">kooriookami</el-descriptions-item>
-    </el-descriptions>
+    <Title>用户信息</Title>
   </div>
 </template>
 
@@ -11,8 +9,11 @@ import Vue from "vue";
 import Component from "vue-class-component";
 import { adminInfoType } from "@/types/type";
 import { GET_ADMIN_INFO } from "@/store/type/getter-type";
+import Title from "../../components/title.vue";
 @Component({
-  components: {},
+  components: {
+    Title,
+  },
 })
 export default class userInfo extends Vue {
   mounted(): void {

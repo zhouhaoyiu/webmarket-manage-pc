@@ -1,6 +1,6 @@
 <template>
   <div>
-    顾客管理
+    <Title>顾客管理</Title>
     <div>
       <el-table>
         <el-table-column label="顾客姓名" prop="name"></el-table-column>
@@ -29,8 +29,11 @@
 <script lang="ts">
 import Vue from "vue";
 import Component from "vue-class-component";
+import Title from "../../components/title.vue";
 @Component({
-  components: {},
+  components: {
+    Title,
+  },
 })
 export default class CustomersManage extends Vue {
   deleteCustomer(row: any) {

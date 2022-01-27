@@ -28,6 +28,7 @@ import { Component, Vue } from "vue-property-decorator";
 export default class Home extends Vue {
   private goPage(page: string): void {
     this["$router"].push(`/home/${page}`);
+    localStorage.setItem("page", page);
   }
 
   get userName(): string {
@@ -52,7 +53,7 @@ export default class Home extends Vue {
   async mounted(): Promise<void> {
     if (!localStorage.getItem("UUid")) {
       this["$router"].push("/login");
-    }
+    }   
   }
 }
 </script>

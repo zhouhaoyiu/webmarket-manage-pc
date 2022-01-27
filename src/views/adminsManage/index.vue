@@ -1,5 +1,6 @@
 <template>
   <div class="adminsInfo">
+    <Title>用户信息</Title>
     <div class="button-group">
       <el-button
         style="box-shadow: 0px 0px 20px 10px #eee"
@@ -91,9 +92,12 @@ import { GET_ADMIN_INFO } from "@/store/type/getter-type";
 import Vue from "vue";
 import Component from "vue-class-component";
 import * as echarts from "echarts";
+import Title from "@/components/title.vue";
 
 @Component({
-  components: {},
+  components: {
+    Title
+  },
 })
 export default class adminsManage extends Vue {
   private adminInfoArray = [];
