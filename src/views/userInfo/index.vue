@@ -1,6 +1,14 @@
 <template>
   <div>
-    <Title>用户信息</Title>
+    <Title>我的信息</Title>
+    <div class="infoList">
+      <div>我的用户名：{{ userName }}</div>
+      <div>我的邮箱： {{ userInfo.emailAddress }}</div>
+      <div>我的手机号：{{ userInfo.phoneNumber }}</div>
+      <div>
+        我的身份：{{ userInfo.adminRole === 0 ? "超级管理员" : "管理员" }}
+      </div>
+    </div>
   </div>
 </template>
 
@@ -18,6 +26,7 @@ import Title from "../../components/title.vue";
 export default class userInfo extends Vue {
   mounted(): void {
     //
+    console.log(this.$store.getters[GET_ADMIN_INFO]);
   }
   get userInfo(): adminInfoType {
     return this.$store.getters[GET_ADMIN_INFO];
@@ -29,4 +38,12 @@ export default class userInfo extends Vue {
 }
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.infoList {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 20%;
+  font-size: 1.5rem;
+}
+</style>

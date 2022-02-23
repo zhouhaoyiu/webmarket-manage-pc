@@ -36,7 +36,7 @@
         :data="goodsClassificationTree"
         :props="defaultProps"
         @node-click="handleNodeClick"
-        default-expand-all="true"
+        :defaultExpandAll="true"
       ></el-tree>
     </div>
   </div>

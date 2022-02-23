@@ -21,6 +21,38 @@ const routes: Array<RouteConfig> = [
         component: () => import("../views/homeIndex/index.vue"),
       },
       {
+        path: "/home/mallManage",
+        name: "mallManage",
+        component: () =>
+          import(
+            /* webpackChunkName: "mallManage" */ "../views/mallManage/index.vue"
+          ),
+      },
+      {
+        path: "/home/ordersManage",
+        name: "ordersManage",
+        component: () =>
+          import(
+            /* webpackChunkName: "ordersManage" */ "../views/ordersManage/index.vue"
+          ),
+      },
+      {
+        path: "/home/goodsStatistics",
+        name: "goodsStatistics",
+        component: () =>
+          import(
+            /* webpackChunkName: "goodsStatistics" */ "../views/statistics/goodsStatistics.vue"
+          ),
+      },
+      {
+        path: "/home/usersStatistics",
+        name: "usersStatistics",
+        component: () =>
+          import(
+            /* webpackChunkName: "usersStatistics" */ "../views/statistics/usersStatistics.vue"
+          ),
+      },
+      {
         path: "/home/userInfo",
         name: "userInfo",
         component: () =>

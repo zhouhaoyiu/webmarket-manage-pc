@@ -50,11 +50,6 @@ export default class SideBar extends Vue {
       role: 1,
     },
     {
-      name: "个人信息",
-      path: "userInfo",
-      role: 1,
-    },
-    {
       name: "商城管理",
       path: "mallManage",
       role: 1,
@@ -85,13 +80,18 @@ export default class SideBar extends Vue {
       role: 1,
     },
     {
+      name: "商品统计",
+      path: "goodsStatistics",
+      role: 1,
+    },
+    {
       name: "用户统计",
       path: "usersStatistics",
       role: 1,
     },
     {
-      name: "商品统计",
-      path: "goodsStatistics",
+      name: "个人信息",
+      path: "userInfo",
       role: 1,
     },
   ];

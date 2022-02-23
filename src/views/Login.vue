@@ -2,11 +2,11 @@
   <div class="login">
     <div class="login-wrap">
       <div class="username">
-        <span>用户名：</span>
+        <span>用户名</span>
         <el-input v-model="username" placeholder="请输入用户名"></el-input>
       </div>
       <div class="password">
-        <span>密码： </span>
+        <span>密码 </span>
         <el-input
           show-password
           placeholder="请输入密码"
@@ -24,7 +24,8 @@
         <el-button
           class="login-button"
           size="medium"
-          type="primary"
+          type=""
+          plain
           @click="regis()"
           >注册</el-button
         >
