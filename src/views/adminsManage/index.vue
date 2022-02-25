@@ -24,7 +24,12 @@
         </el-table-column>
         <el-table-column align="center" label="操作">
           <template slot-scope="scope">
-            <div style="width: 100%; display: flex; justify-content: center">
+            <div
+              style="width: 100%; display: flex; justify-content: center"
+              v-if="
+                scope.row.userName !== $store.state.adminInfo.userName
+              "
+            >
               <div
                 style="color: green; padding: 5px; cursor: pointer"
                 @click="sendEmail(scope.row.emailAddress)"
@@ -38,6 +43,7 @@
                 删除
               </div>
             </div>
+            <div v-else>无</div>
           </template>
         </el-table-column>
       </el-table>
@@ -76,12 +82,12 @@
             ></el-input>
           </el-form-item>
         </el-form>
-          <div slot="footer" class="dialog-footer">
-            <el-button @click="dialogFormVisible = false">取 消</el-button>
-            <el-button type="primary" @click="dialogFormVisible = false"
-              >确 定</el-button
-            >
-          </div>
+        <div slot="footer" class="dialog-footer">
+          <el-button @click="dialogFormVisible = false">取 消</el-button>
+          <el-button type="primary" @click="dialogFormVisible = false"
+            >确 定</el-button
+          >
+        </div>
       </el-dialog>
     </div>
   </div>
@@ -96,7 +102,7 @@ import Title from "@/components/title.vue";
 
 @Component({
   components: {
-    Title
+    Title,
   },
 })
 export default class adminsManage extends Vue {

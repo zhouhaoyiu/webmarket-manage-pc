@@ -8,8 +8,10 @@ import VueAxios from "vue-axios";
 import ElementUI from "element-ui";
 import "./assets/reset.scss";
 import "./assets/element-variables.scss";
+import _ from "lodash";
 
 Vue.config.productionTip = false;
+Vue.prototype._ = _;
 Vue.prototype.$axios = axios;
 Vue.use(ElementUI);
 Vue.prototype.$axios.defaults.baseURL = "http://localhost:8090/";
