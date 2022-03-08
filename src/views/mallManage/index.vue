@@ -6,10 +6,21 @@
         >修改商城信息</el-button
       >
     </div>
-    <div v-if="marketInfo">
-      <div>商城名称：{{ marketInfo.marketName }}</div>
-      <div>推荐商品：{{ marketInfo.marketRecommend }}</div>
-      <div>商城信息：{{ marketInfo.marketMeta }}</div>
+    <div v-if="marketInfo" class="marketInfo">
+      <div class="marketInfoTitle">商城信息</div>
+      <div class="marketInfoLine">商城名称：{{ marketInfo.marketName }}</div>
+      <!-- <hr
+        style="
+          width: 100%;
+          border: 0;
+          padding-top: 1px;
+          background: linear-gradient(to right, transparent, #d0d0d5, transparent);
+        "
+      /> -->
+      <div class="marketInfoLine">
+        推荐商品：{{ marketInfo.marketRecommend }}
+      </div>
+      <div class="marketInfoLine">商城信息：{{ marketInfo.marketMeta }}</div>
     </div>
     <el-dialog
       :title="dialogTitle"
@@ -33,6 +44,7 @@
           <el-select
             v-model="marketInfoDialog.marketRecommend"
             filterable
+            multiple
             placeholder="请选择"
           >
             <el-option
@@ -59,6 +71,7 @@
 </template>
 
 <script lang="ts">
+import { LoDashStatic } from "lodash";
 import { Component, Vue } from "vue-property-decorator";
 import Title from "../../components/title.vue";
 @Component({
@@ -75,13 +88,15 @@ export default class MallManage extends Vue {
     marketRecommend: "",
     marketMeta: "",
   };
+  private options = [];
+  _: LoDashStatic = window["_"];
   openChangeMallInfo() {
     this.dialogVision = true;
   }
   async mounted(): Promise<void> {
     const res = await this.axios.get("/marketInfo/getMarketInfo");
     this.marketInfoDialog = this._.cloneDeep(res.data.data[0]);
-    this.marketInfo = this._.cloneDeep(this.marketInfoDialog);
+    (this.marketInfo as unknown) = this._.cloneDeep(this.marketInfoDialog);
   }
 }
 </script>
@@ -90,5 +105,28 @@ export default class MallManage extends Vue {
 .dialogLine {
   display: flex;
   flex-direction: row;
+}
+.marketInfo {
+  font-family: apple-system, BlinkMacSystemFont, segoe ui, Roboto,
+    helvetica neue, Arial, noto sans, sans-serif, apple color emoji,
+    segoe ui emoji, segoe ui symbol, noto color emoji;
+  display: flex;
+  flex-direction: column;
+  margin-top: 20px;
+  padding: 24px;
+  border-radius: 12px;
+  box-shadow: 0 0px 3px 0px rgba(0, 0, 0, 0.1);
+  background: rgb(255, 255, 255);
+  .marketInfoTitle {
+    font-size: 18px;
+    margin: auto;
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
+  .marketInfoLine {
+    margin-top: 5px;
+    margin-bottom: 5px;
+    font-size: 24px;
+  }
 }
 </style>

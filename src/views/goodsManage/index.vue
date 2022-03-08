@@ -54,12 +54,14 @@
           <el-upload
             class="upload-demo"
             action="http://localhost:8090/goods/upload/image"
+            ref="goodsListUpload"
             list-type="picture-card"
+            :auto-upload="false"
             name="picture"
             :on-preview="handlePictureCardPreview"
             :on-remove="handleRemove"
-            :on-success="handleAvatarSuccess"
-            :before-upload="beforeAvatarUpload"
+            :on-success="handleGoodsListSuccess"
+            :before-upload="beforeGoodsListUpload"
             :file-list="goodsList"
             multiple
           >
@@ -69,13 +71,15 @@
         <el-form-item label="商品描述图片">
           <el-upload
             class="upload-demo"
+            ref="goodsDescUpload"
             action="http://localhost:8090/goods/upload/image"
             list-type="picture-card"
+            :auto-upload="false"
             name="picture"
             :on-preview="handlePictureCardPreview"
             :on-remove="handleRemove"
-            :on-success="handleAvatarSuccess"
-            :before-upload="beforeAvatarUpload"
+            :on-success="handleGoodsDescribeSuccess"
+            :before-upload="beforeGoodsDescribeListUpload"
             :file-list="goodsDescribeList"
             multiple
           >
@@ -101,11 +105,13 @@
 
 <script lang="ts">
 import Title from "@/components/title.vue";
+import { Form } from "element-ui";
+import { ElementUIComponent } from "element-ui/types/component";
 import Vue from "vue";
 import Component from "vue-class-component";
 @Component({
   components: {
-    Title
+    Title,
   },
 })
 export default class GoodsManage extends Vue {
@@ -114,7 +120,8 @@ export default class GoodsManage extends Vue {
     type: "",
     price: 0,
     stock: 0,
-    image: "",
+    goodsList: [],
+    goodsDescribeList: [],
   };
   goodsList = [];
   goodsDescribeList = [];
@@ -123,24 +130,38 @@ export default class GoodsManage extends Vue {
   previewImage = "";
   previewVisible = false;
 
-  submitForm(formName: string) {
-    (this.$refs[formName] as any).validate((valid: boolean) => {
-      if (valid) {
-        console.log(this.form);
+  async submitForm() {
+    (this.$refs.goodsListUpload! as any).submit();
+    (this.$refs.goodsDescUpload! as any).submit();
+    const res = await this.axios.post("/goods/addGoods", this.form);
+    {
+      if (res.data.code === 0) {
+        this.$message.success("添加成功");
+        this.addGoodsVisble = false;
+        this.form = {
+          name: "",
+          type: "",
+          price: 0,
+          stock: 0,
+          goodsList: [],
+          goodsDescribeList: [],
+        };
       } else {
-        console.log("error submit!!");
-        return false;
+        this.$message.error(res.data.msg);
       }
-    });
+    }
   }
 
-  handleAvatarSuccess(res: any, file: any) {
-    this.form.image = res.data;
-    // this.goodsList = [];
-    console.log(res);
+  handleGoodsListSuccess(res: { data: any }, file: any, fileList: any) {
+    (this.form.goodsList as Array<string>).push(res.data);
+    this.goodsList = [];
+  }
+  handleGoodsDescribeSuccess(res: any, file: any, fileList: any) {
+    (this.form.goodsDescribeList as Array<string>).push(res.data);
+    this.goodsDescribeList = [];
   }
 
-  beforeAvatarUpload(file: any) {
+  checkFile(file: { type: string; size: number }) {
     const isJPG = file.type === "image/jpeg";
     const isLt2M = file.size / 1024 / 1024 < 2;
 
@@ -148,20 +169,37 @@ export default class GoodsManage extends Vue {
       this.$message.error("上传头像图片只能是 JPG 格式!");
     }
     if (!isLt2M) {
-      this.$message.error("上传头像图片大小不能超过 2MB!");
+      this.$message.error("上传图片大小不能超过 2MB!");
     }
     return isJPG && isLt2M;
   }
 
+  beforeGoodsListUpload(file: any) {
+    if (this.checkFile(file)) {
+      (this.goodsList as Array<File>).push(file);
+    } else {
+      return false;
+    }
+  }
+  beforeGoodsDescribeListUpload(file: any) {
+    if (this.checkFile(file)) {
+      (this.goodsDescribeList as Array<File>).push(file);
+    } else {
+      return false;
+    }
+  }
+
   handlePictureCardPreview(file: any) {
+    console.log(file);
     this.previewImage = file.url;
     this.previewVisible = true;
   }
 
-  handleRemove(file: any) {
-    this.goodsList = this.goodsList.filter(
-      (item: any) => item.uid !== file.uid
-    );
+  handleRemove(file: any, fileList: any) {
+    console.log(fileList);
+    // this.goodsList = this.goodsList.filter(
+    //   (item: any) => item.uid !== file.uid
+    // );
   }
 
   cancel() {

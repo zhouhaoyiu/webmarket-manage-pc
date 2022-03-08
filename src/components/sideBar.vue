@@ -140,7 +140,12 @@ export default class SideBar extends Vue {
   background-color: transparent;
   color: #021146;
   height: 100%;
-  width: 200px;
+  width: 208px;
+  z-index: 100;
+  box-shadow: 2px 0 8px 0 rgba(29,35,41,.05);
+  top: 0;
+  left: 0;
+  overflow: hidden;
   min-width: 200px;
   .info {
     display: flex;
