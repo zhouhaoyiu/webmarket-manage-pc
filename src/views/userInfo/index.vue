@@ -1,12 +1,24 @@
 <template>
   <div>
-    <Title>我的信息</Title>
+    <Title>个人信息</Title>
     <div class="infoList">
-      <div>我的用户名：{{ userName }}</div>
-      <div>我的邮箱： {{ userInfo.emailAddress }}</div>
-      <div>我的手机号：{{ userInfo.phoneNumber }}</div>
-      <div>
-        我的身份：{{ userInfo.adminRole === 0 ? "超级管理员" : "管理员" }}
+      <div class="infoCard">
+        <div class="infoTitle">用户名</div>
+        <div class="infoText">{{ userName }}</div>
+      </div>
+      <div class="infoCard">
+        <div class="infoTitle">邮箱</div>
+        <div class="infoText">{{ userInfo.emailAddress }}</div>
+      </div>
+      <div class="infoCard">
+        <div class="infoTitle">手机号</div>
+        <div class="infoText">{{ userInfo.phoneNumber }}</div>
+      </div>
+      <div class="infoCard">
+        <div class="infoTitle">身份</div>
+        <div class="infoText">
+          {{ userInfo.adminRole === 0 ? "超级管理员" : "管理员" }}
+        </div>
       </div>
     </div>
   </div>
@@ -41,9 +53,31 @@ export default class userInfo extends Vue {
 <style lang="scss" scoped>
 .infoList {
   display: flex;
-  flex-direction: column;
+  flex-wrap: wrap;
   justify-content: space-between;
-  height: 20%;
-  font-size: 1.5rem;
+  margin-top: 20px;
+  .infoCard {
+    width: 340px;
+    height: 190px;
+    padding: 40px;
+    margin-top: 20px;
+    margin-left: 20px;
+    background: #fff;
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+    // justify-content: center;
+    align-items: center;
+    text-align: center;
+    justify-content: space-between;
+    .infoTitle {
+      font-size: 32px;
+      font-weight: bold;
+    }
+    .infoText {
+      font-size: 24px;
+      color: #666;
+    }
+  }
 }
 </style>

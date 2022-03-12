@@ -1,6 +1,6 @@
 <template>
   <div class="adminsInfo">
-    <Title>用户信息</Title>
+    <Title>管理员管理</Title>
     <div class="button-group">
       <el-button
         style="box-shadow: 0px 0px 20px 10px #eee"
@@ -10,10 +10,18 @@
       >
     </div>
     <div class="info-group">
-      <el-table :data="adminInfoArray" stripe class="info-table">
-        <el-table-column align="center" prop="userName" label="用户名">
+      <el-table height="400px" :data="adminInfoArray" stripe class="info-table">
+        <el-table-column
+          align="center"
+          prop="userName"
+          label="用户名"
+        >
         </el-table-column>
-        <el-table-column align="center" prop="phoneNumber" label="电话号码">
+        <el-table-column
+          align="center"
+          prop="phoneNumber"
+          label="电话号码"
+        >
         </el-table-column>
         <el-table-column align="center" label="用户身份">
           <template slot-scope="scope">
@@ -22,13 +30,11 @@
             </span>
           </template>
         </el-table-column>
-        <el-table-column align="center" label="操作">
+        <el-table-column fixed="right" align="center" label="操作">
           <template slot-scope="scope">
             <div
               style="width: 100%; display: flex; justify-content: center"
-              v-if="
-                scope.row.userName !== $store.state.adminInfo.userName
-              "
+              v-if="scope.row.userName !== $store.state.adminInfo.userName"
             >
               <div
                 style="color: green; padding: 5px; cursor: pointer"
@@ -99,6 +105,7 @@ import Vue from "vue";
 import Component from "vue-class-component";
 import * as echarts from "echarts";
 import Title from "@/components/title.vue";
+import { LoDashStatic } from "lodash";
 
 @Component({
   components: {
@@ -115,6 +122,7 @@ export default class adminsManage extends Vue {
     emailAddress: "",
     pin: "",
   };
+  _: LoDashStatic = window._;
 
   sendEmail(emailAddress: string): void {
     const url = `mailto:${emailAddress}`;
@@ -143,12 +151,12 @@ export default class adminsManage extends Vue {
       },
     });
     if (res.data.code === "0") {
-      this.adminInfoArray = res.data.data;
+      this.adminInfoArray = this._.cloneDeep(res.data.data);
     }
 
     this.$nextTick(() => {
       let dom = document.querySelector(".admin-count-charts") as HTMLElement;
-      console.log(dom);
+      // console.log(dom);
       let myChart = echarts.init(dom);
       let option = {
         title: {
@@ -171,7 +179,7 @@ export default class adminsManage extends Vue {
         },
         tooltip: {
           trigger: "item",
-          formatter: "{a} <br/>{b} : {c} ({d}%)",
+          formatter: "{a} <br/>{b} : {c}",
         },
         legend: {
           orient: "vertical",
@@ -213,6 +221,7 @@ export default class adminsManage extends Vue {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    // justify-content: flex-start;
     .info-table {
       width: 60%;
       flex: none;
@@ -223,6 +232,7 @@ export default class adminsManage extends Vue {
       padding: 10px 20px;
       background: white;
       box-shadow: 0px 0px 20px 10px #eee;
+      // margin-left: 80px;
       // display: none;
       height: 400px;
       // padding: 2%;
