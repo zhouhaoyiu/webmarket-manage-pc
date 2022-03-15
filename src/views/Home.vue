@@ -20,13 +20,15 @@
 <script lang="ts">
 import SideBar from "@/components/sideBar.vue";
 import { GET_ADMIN_INFO } from "@/store/type/getter-type";
+import getGoods from "@/utils/getGoods";
+import getGoodsClassification from "@/utils/getGoodsClassifacation";
 import { Component, Vue } from "vue-property-decorator";
 
 @Component({
   components: { SideBar },
 })
 export default class Home extends Vue {
-  private goPage(page: string): void {
+  public goPage(page: string): void {
     this["$router"].push(`/home/${page}`);
     localStorage.setItem("page", page);
   }
@@ -45,7 +47,7 @@ export default class Home extends Vue {
     ];
   }
 
-  private logOut(): void {
+  public logOut(): void {
     localStorage.removeItem("UUid");
     this["$router"].push("/login");
   }
@@ -53,8 +55,11 @@ export default class Home extends Vue {
   async mounted(): Promise<void> {
     if (!localStorage.getItem("UUid")) {
       this["$router"].push("/login");
-    }   
+    }
+   getGoodsClassification();
+   getGoods();
   }
+
 }
 </script>
 

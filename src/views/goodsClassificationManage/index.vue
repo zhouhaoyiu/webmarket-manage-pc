@@ -5,6 +5,9 @@
       <el-button type="primary" @click="addGoodsClassificationVisble = true">
         添加分类
       </el-button>
+      <el-button type="primary" @click="deleteGoodsClassifacition = true">
+        删除分类
+      </el-button>
       <el-dialog title="商品分类信息" :visible="addGoodsClassificationVisble">
         <el-form :model="form" ref="form" label-width="80px">
           <el-form-item label="分类名称">
@@ -43,10 +46,10 @@
 </template>
 
 <script lang="ts">
-import { Form } from "element-ui";
 import Vue from "vue";
 import Component from "vue-class-component";
 import Title from "../../components/title.vue";
+import getGoodsClassification from "@/utils/getGoodsClassifacation";
 
 @Component({
   components: {
@@ -54,10 +57,9 @@ import Title from "../../components/title.vue";
   },
 })
 export default class GoodsClassificationManage extends Vue {
-  addGoodsClassificationVisble = false;
-  goodsClassificationList = [];
-
-  form = {
+  public addGoodsClassificationVisble = false;
+  public deleteGoodsClassifacition = false;
+  public form = {
     classificationName: "",
     parentId: "",
   };
@@ -73,32 +75,12 @@ export default class GoodsClassificationManage extends Vue {
     console.log(data);
   }
 
-  goodsClassificationListToTree() {
-    let goodsClassificationList: any = this.goodsClassificationList;
-    let goodsClassificationTree: any = [];
-    let goodsClassificationTreeMap: any = {};
-    goodsClassificationList.forEach((item: any) => {
-      goodsClassificationTreeMap[
-        item.classificationId as keyof typeof goodsClassificationTreeMap
-      ] = item;
-    });
-    goodsClassificationList.forEach((item: any) => {
-      let parent =
-        goodsClassificationTreeMap[
-          item.parentId as keyof typeof goodsClassificationTreeMap
-        ];
-      if (parent) {
-        (parent.children || (parent.children = [])).push(item);
-      } else {
-        goodsClassificationTree.push(item);
-      }
-    });
-    console.log(goodsClassificationTree);
-    return goodsClassificationTree;
+  get goodsClassificationTree() {
+    return this.$store.getters.getGoodsClassificationTree;
   }
 
-  get goodsClassificationTree() {
-    return this.goodsClassificationListToTree();
+  get goodsClassificationList() {
+    return this.$store.getters.getGoodsClassificationList;
   }
 
   async submitForm() {
@@ -111,22 +93,14 @@ export default class GoodsClassificationManage extends Vue {
     console.log(res.data);
     if (res.data.code === 0) {
       this.$message.success("添加成功");
-      this.getGoodsClassificationList();
+      getGoodsClassification();
     } else {
       this.$message.error(res.data.msg);
     }
   }
 
-  async getGoodsClassificationList(): Promise<void> {
-    const res = await this.axios.get(
-      "/goodsClassification/getAllClassfication"
-    );
-    this.goodsClassificationList = res.data.data;
-    console.log(this.goodsClassificationList);
-  }
-
   mounted(): void {
-    this.getGoodsClassificationList();
+    getGoodsClassification();
   }
 }
 </script>

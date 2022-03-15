@@ -80,15 +80,15 @@ import Title from "../../components/title.vue";
   },
 })
 export default class MallManage extends Vue {
-  private marketInfo = null;
-  private dialogVision = false;
-  private dialogTitle = "修改商城信息";
-  private marketInfoDialog = {
+  public marketInfo = null;
+  public dialogVision = false;
+  public dialogTitle = "修改商城信息";
+  public marketInfoDialog = {
     marketName: "",
     marketRecommend: "",
     marketMeta: "",
   };
-  private options = [];
+  public options = [];
   _: LoDashStatic = window["_"];
   openChangeMallInfo() {
     this.dialogVision = true;

@@ -54,14 +54,14 @@ import Component from "vue-class-component";
   components: {},
 })
 export default class Regis extends Vue {
-  private formData = {
+  public formData = {
     userName: "",
     passWord: "",
     phoneNumber: "",
     emailAddress: "",
     pin: "",
   };
-  private checkPhone = (
+  public checkPhone = (
     rule: never,
     value: string,
     callback: (arg0?: Error) => void
@@ -84,7 +84,7 @@ export default class Regis extends Vue {
       }
     }, 100);
   };
-  private checkEmail = (
+  public checkEmail = (
     rule: never,
     value: string,
     callback: (arg0?: Error) => void
@@ -101,7 +101,7 @@ export default class Regis extends Vue {
       }
     }, 100);
   };
-  private checkPin = (
+  public checkPin = (
     rule: never,
     value: string,
     callback: (arg0?: Error) => void
@@ -119,7 +119,7 @@ export default class Regis extends Vue {
     }, 100);
   };
 
-  private rules = {
+  public rules = {
     userName: [
       { required: true, message: "请输入用户名", trigger: "blur" },
       { min: 3, max: 15, message: "长度在 3 到 15 个字符", trigger: "blur" },
@@ -170,7 +170,7 @@ export default class Regis extends Vue {
     };
     return form;
   }
-  private async adminRegis() {
+  public async adminRegis() {
     const res = await this["axios"].post("admin/adminRegis", this.sendFormData);
     console.log(res);
     if (res.data["code"] === "0") {

@@ -43,10 +43,10 @@ import { SET_ADMIN_INFO } from "@/store/type/mutation-type";
   components: {},
 })
 export default class Login extends Vue {
-  private username = "";
-  private password = "";
+  public username = "";
+  public password = "";
 
-  private async login(): Promise<void> {
+  public async login(): Promise<void> {
     let publicKey: { [x: string]: string; data: string };
     publicKey = await this["axios"].get("rsa/pubKey");
     if (String(publicKey["status"]) === "200") {
@@ -76,7 +76,7 @@ export default class Login extends Vue {
     }
   }
 
-  private regis(): void {
+  public regis(): void {
     this["$router"].push("/regis");
   }
   mounted(): void {

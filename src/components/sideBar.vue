@@ -43,7 +43,7 @@ export default class SideBar extends Vue {
   @Prop() goPage!: (page: string) => void;
   @Prop() logOut!: () => void;
 
-  private buttonArr = [
+  public buttonArr = [
     {
       name: "首页",
       path: "index",
@@ -96,11 +96,11 @@ export default class SideBar extends Vue {
     },
   ];
 
-  private emitGoPage(path: string, index: number): void {
+  public emitGoPage(path: string, index: number): void {
     this.$emit("goPage", path);
   }
 
-  private getActiveClass(
+  public getActiveClass(
     strict = false,
     path: string
   ): { active: boolean } | string {

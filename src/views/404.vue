@@ -320,7 +320,7 @@ import Component from "vue-class-component";
   name: "NotFound",
 })
 export default class NotFound extends Vue {
-  private goHome() {
+  public goHome() {
     this.$router.push("/");
     localStorage.removeItem("page");
   }

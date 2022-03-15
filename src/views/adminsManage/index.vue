@@ -113,9 +113,9 @@ import { LoDashStatic } from "lodash";
   },
 })
 export default class adminsManage extends Vue {
-  private adminInfoArray = [];
-  private dialogFormVisible = false;
-  private form = {
+  public adminInfoArray = [];
+  public dialogFormVisible = false;
+  public form = {
     userName: "",
     passWord: "",
     phoneNumber: "",
