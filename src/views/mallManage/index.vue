@@ -80,7 +80,11 @@ import Title from "../../components/title.vue";
   },
 })
 export default class MallManage extends Vue {
-  public marketInfo = null;
+  public marketInfo = {
+    marketName: "",
+    marketRecommend: [],
+    marketMeta: "",
+  };
   public dialogVision = false;
   public dialogTitle = "修改商城信息";
   public marketInfoDialog = {
@@ -88,7 +92,12 @@ export default class MallManage extends Vue {
     marketRecommend: "",
     marketMeta: "",
   };
-  public options = [];
+  public options = [
+    {
+      value: "选项1",
+      label: "黄金糕",
+    }
+  ];
   _: LoDashStatic = window["_"];
   openChangeMallInfo() {
     this.dialogVision = true;
@@ -97,6 +106,12 @@ export default class MallManage extends Vue {
     const res = await this.axios.get("/marketInfo/getMarketInfo");
     this.marketInfoDialog = this._.cloneDeep(res.data.data[0]);
     (this.marketInfo as unknown) = this._.cloneDeep(this.marketInfoDialog);
+    this.options = this.$store.getters.getGoodsList.map((item: { goodsName: any; goodsId: any; }) => {
+      return {
+        label: item.goodsName,
+        value: item.goodsId,
+      };
+    });
   }
 }
 </script>

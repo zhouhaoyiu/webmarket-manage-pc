@@ -2,13 +2,16 @@
   <div class="goodsClassificationManage">
     <Title>商品分类管理</Title>
     <div class="addClassificication">
-      <el-button type="primary" @click="addGoodsClassificationVisble = true">
+      <el-button type="primary" @click="addGoodsClassificationVisible = true">
         添加分类
       </el-button>
-      <el-button type="primary" @click="deleteGoodsClassifacition = true">
+      <el-button
+        type="primary"
+        @click="deleteGoodsClassifacitionVisible = true"
+      >
         删除分类
       </el-button>
-      <el-dialog title="商品分类信息" :visible="addGoodsClassificationVisble">
+      <el-dialog title="商品分类信息" :visible="addGoodsClassificationVisible">
         <el-form :model="form" ref="form" label-width="80px">
           <el-form-item label="分类名称">
             <el-input
@@ -31,6 +34,46 @@
         <div slot="footer" class="dialog-footer">
           <el-button type="danger" @click="cancel">取消</el-button>
           <el-button type="primary" @click="submitForm()">提交</el-button>
+        </div>
+      </el-dialog>
+      <el-dialog
+        title="删除商品分类"
+        :visible="deleteGoodsClassifacitionVisible"
+        center
+        width="400px"
+      >
+        <el-form :model="form" ref="deleteForm">
+          <el-form-item label="请选择删除的分类">
+            <el-select v-model="deleteClassificationId">
+              <el-option
+                v-for="(i, index) in goodsClassificationList"
+                :key="index"
+                :label="i.classificationName"
+                :value="i.classificationId"
+              >
+              </el-option>
+            </el-select>
+            <div
+              style="
+                font-size: 12px;
+                color: grey;
+                text-align: center;
+                margin-top: 30px;
+              "
+            >
+              <span>提示：</span>
+              <span>删除分类会删除所有子分类</span>
+            </div>
+          </el-form-item>
+        </el-form>
+        <!--提示会删除子分类 -->
+        <div slot="footer" class="dialog-footer">
+          <el-button @click="deleteGoodsClassifacitionVisible = false">
+            取消
+          </el-button>
+          <el-button type="primary" @click="deleteGoodsClassifacition()">
+            确定
+          </el-button>
         </div>
       </el-dialog>
     </div>
@@ -57,21 +100,22 @@ import getGoodsClassification from "@/utils/getGoodsClassifacation";
   },
 })
 export default class GoodsClassificationManage extends Vue {
-  public addGoodsClassificationVisble = false;
-  public deleteGoodsClassifacition = false;
+  public addGoodsClassificationVisible = false;
+  public deleteGoodsClassifacitionVisible = false;
   public form = {
     classificationName: "",
     parentId: "",
   };
+  public deleteClassificationId = -1;
 
-  cancel() {
-    this.addGoodsClassificationVisble = false;
+  public cancel() {
+    this.addGoodsClassificationVisible = false;
   }
-  defaultProps = {
+  public defaultProps = {
     children: "children",
     label: "classificationName",
   };
-  handleNodeClick(data: any) {
+  public handleNodeClick(data: any) {
     console.log(data);
   }
 
@@ -99,6 +143,17 @@ export default class GoodsClassificationManage extends Vue {
     }
   }
 
+  public async deleteGoodsClassifacition() {
+    const res = await this.axios.get(
+      "/goodsClassification/deleteClassification",
+      {
+        params: {
+          classificationId: this.deleteClassificationId,
+        },
+      }
+    );
+  }
+
   mounted(): void {
     getGoodsClassification();
   }
@@ -106,6 +161,10 @@ export default class GoodsClassificationManage extends Vue {
 </script>
 
 <style lang="scss" scoped>
+::v-deep .el-dialog__body,
+.el-dialog--center .el-dialog__body {
+  padding: 30px 20px 0px 20px;
+}
 .goodsClassificationManage {
   height: 100%;
   width: 100%;

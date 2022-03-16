@@ -2,11 +2,11 @@ import axios from "axios";
 import store from "@/store";
 /***
  * 获取商品分类
- * 
+ *
  * @author zhouhaoyu
  * @date 2022-03
  * @@returns {Array<object>} 商品分类
- * 
+ *
  */
 export default async function getGoodsClassification() {
   const goodsClassificationTree: any = [];
