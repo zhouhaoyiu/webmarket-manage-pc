@@ -21,6 +21,18 @@
         </div>
       </div>
     </div>
+    <div class="infoCard">
+      <div class="infoTitle">登录记录</div>
+      <div class="infoText">
+        {{ userInfo.adminRole === 0 ? "超级管理员" : "管理员" }}
+      </div>
+    </div>
+    <div class="infoCard">
+      <div class="infoTitle">登录分析</div>
+      <div class="infoText">
+        {{ userInfo.adminRole === 0 ? "超级管理员" : "管理员" }}
+      </div>
+    </div>
   </div>
 </template>
 

@@ -128,12 +128,21 @@
         prop="goodCount"
         label="商品库存"
       ></el-table-column>
-      <el-table-column
-        align="center"
-        prop="goodImages"
-        label="商品图片"
-        width="200px"
-      ></el-table-column>
+      <el-table-column align="center" label="商品图片"
+        ><template slot-scope="scope">
+          <div>
+            <el-button
+              type="primary"
+              size="small"
+              @click="
+                editGoodsDescribeVisble = true;
+                editGoodsDescribeIndex = scope.row.$index;
+              "
+              >查看图片</el-button
+            >
+          </div>
+        </template>
+      </el-table-column>
       <el-table-column
         align="center"
         prop="goodDescribeImages"
@@ -145,6 +154,7 @@
           <div>
             <el-button
               type="primary"
+              size="small"
               @click="
                 editGoodsDescribeVisble = true;
                 editGoodsDescribeIndex = scope.row.$index;
@@ -311,10 +321,11 @@ export default class GoodsManage extends Vue {
     this.goodsImageList = this.goodsImageList.filter(
       (item: any) => item.uid !== file.uid
     );
+    
   }
   /**
    * @event 选择商品分类
-   * @param file
+   * @param 
    */
   public get GoodsClassifactionFilterList() {
     return this.$store.getters.getGoodsClassificationList.filter(

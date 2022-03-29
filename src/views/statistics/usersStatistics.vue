@@ -1,6 +1,13 @@
 <template>
   <div>
     <Title>用户统计</Title>
+    <el-table >
+      <el-table-column label="用户名" prop="name"></el-table-column>
+      <el-table-column label="用户电话" prop="phoneNumber"></el-table-column>
+      <el-table-column label="访问分类" prop="address"></el-table-column>
+      <el-table-column label="访问内容" prop="emailAddress"></el-table-column>
+      <el-table-column label="访问时间" prop="status"></el-table-column>
+    </el-table>
   </div>
 </template>
 

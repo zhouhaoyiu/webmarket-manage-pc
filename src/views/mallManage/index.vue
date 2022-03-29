@@ -21,6 +21,7 @@
         推荐商品：{{ marketInfo.marketRecommend }}
       </div>
       <div class="marketInfoLine">商城信息：{{ marketInfo.marketMeta }}</div>
+      <div class="marketInfoLine">首页轮播图：{{ marketInfo.marketMeta }}</div>
     </div>
     <el-dialog
       :title="dialogTitle"
@@ -96,7 +97,7 @@ export default class MallManage extends Vue {
     {
       value: "选项1",
       label: "黄金糕",
-    }
+    },
   ];
   _: LoDashStatic = window["_"];
   openChangeMallInfo() {
@@ -106,12 +107,14 @@ export default class MallManage extends Vue {
     const res = await this.axios.get("/marketInfo/getMarketInfo");
     this.marketInfoDialog = this._.cloneDeep(res.data.data[0]);
     (this.marketInfo as unknown) = this._.cloneDeep(this.marketInfoDialog);
-    this.options = this.$store.getters.getGoodsList.map((item: { goodsName: any; goodsId: any; }) => {
-      return {
-        label: item.goodsName,
-        value: item.goodsId,
-      };
-    });
+    this.options = this.$store.getters.getGoodsList.map(
+      (item: { goodsName: any; goodsId: any }) => {
+        return {
+          label: item.goodsName,
+          value: item.goodsId,
+        };
+      }
+    );
   }
 }
 </script>
