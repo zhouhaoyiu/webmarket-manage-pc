@@ -2,13 +2,13 @@
   <div>
     <Title>顾客管理</Title>
     <div>
-      <el-table>
-        <el-table-column label="顾客姓名" prop="name"></el-table-column>
-        <el-table-column label="顾客电话" prop="phoneNumber"></el-table-column>
-        <el-table-column label="顾客邮箱" prop="emailAddress"></el-table-column>
-        <el-table-column label="顾客地址" prop="address"></el-table-column>
-        <el-table-column label="顾客状态" prop="status"></el-table-column>
-        <el-table-column label="操作" width="180" fixed="right" align="center">
+      <el-table :data="customer">
+        <el-table-column align="center" label="顾客姓名" prop="username"></el-table-column>
+        <el-table-column align="center" label="顾客性别" prop="gender"></el-table-column>
+        <el-table-column align="center" label="顾客电话" prop="phonenumber"></el-table-column>
+        <el-table-column align="center" label="顾客id" prop="useruuid"></el-table-column>
+        <el-table-column align="center" label="顾客地址" prop="address"></el-table-column>
+        <el-table-column align="center" label="操作" width="180" fixed="right">
           <template slot-scope="scope">
             <div>
               <el-button
@@ -36,6 +36,18 @@ import Title from "../../components/title.vue";
   },
 })
 export default class CustomersManage extends Vue {
+  public customer = [];
+  _ = window._;
+
+  async mounted(): Promise<void> {
+    await this.getCustomers();
+  }
+  async getCustomers(): Promise<void> {
+    const res = await this.axios.get("/user/allUsers");
+    console.log(res);
+    this.customer = this._.cloneDeep(res.data.data);
+  }
+
   deleteCustomer(row: any) {
     console.log(row);
   }

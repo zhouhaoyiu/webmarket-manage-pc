@@ -128,18 +128,25 @@
         prop="goodCount"
         label="商品库存"
       ></el-table-column>
-      <el-table-column align="center" label="商品图片"
-        ><template slot-scope="scope">
-          <div>
-            <el-button
-              type="primary"
-              size="small"
-              @click="
-                editGoodsDescribeVisble = true;
-                editGoodsDescribeIndex = scope.row.$index;
-              "
-              >查看图片</el-button
+      <el-table-column align="center" label="商品图片">
+        <template slot-scope="scope">
+          <!-- {{ scope.row.goodImages}} -->
+          <div
+            style="display: flex; flex-direction: row; justify-content: center"
+            v-if="scope.row.goodImages"
+          >
+            <div
+              v-for="image in scope.row.goodImages.split(',')"
+              :key="image"
+              style="margin: 0px 10px"
             >
+              <img
+                width="40px"
+                height="40px"
+                :src="`http://localhost:8090/images/${image}`"
+                alt="商品图片"
+              />
+            </div>
           </div>
         </template>
       </el-table-column>
@@ -148,7 +155,27 @@
         prop="goodDescribeImages"
         label="商品描述图片"
         width="200px"
-      ></el-table-column>
+      >
+        <template slot-scope="scope">
+          <div
+            style="display: flex; flex-direction: row; justify-content: center"
+            v-if="scope.row.goodDescribeImages"
+          >
+            <div
+              v-for="image in scope.row.goodDescribeImages.split(',')"
+              :key="image"
+              style="margin: 0px 10px"
+            >
+              <img
+                width="40px"
+                height="40px"
+                :src="`http://localhost:8090/images/${image}`"
+                alt="商品描述图片"
+              />
+            </div>
+          </div>
+        </template>
+      </el-table-column>
       <el-table-column align="center" label="商品描述"
         ><template slot-scope="scope">
           <div>
@@ -172,8 +199,6 @@
 import Title from "@/components/title.vue";
 import Vue from "vue";
 import Component from "vue-class-component";
-import { Watch } from "vue-property-decorator";
-import App from "../../App.vue";
 @Component({
   components: {
     Title,
@@ -321,11 +346,10 @@ export default class GoodsManage extends Vue {
     this.goodsImageList = this.goodsImageList.filter(
       (item: any) => item.uid !== file.uid
     );
-    
   }
   /**
    * @event 选择商品分类
-   * @param 
+   * @param
    */
   public get GoodsClassifactionFilterList() {
     return this.$store.getters.getGoodsClassificationList.filter(

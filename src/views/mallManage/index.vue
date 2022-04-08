@@ -95,8 +95,16 @@ export default class MallManage extends Vue {
   };
   public options = [
     {
-      value: "选项1",
-      label: "黄金糕",
+      value: "sellVolume",
+      label: "销量",
+    },
+    {
+      value: "visitVolume",
+      label: "访问量",
+    },
+    {
+      value: "shelfTime",
+      label: "上架时间(新->旧)",
     },
   ];
   _: LoDashStatic = window["_"];
@@ -107,14 +115,6 @@ export default class MallManage extends Vue {
     const res = await this.axios.get("/marketInfo/getMarketInfo");
     this.marketInfoDialog = this._.cloneDeep(res.data.data[0]);
     (this.marketInfo as unknown) = this._.cloneDeep(this.marketInfoDialog);
-    this.options = this.$store.getters.getGoodsList.map(
-      (item: { goodsName: any; goodsId: any }) => {
-        return {
-          label: item.goodsName,
-          value: item.goodsId,
-        };
-      }
-    );
   }
 }
 </script>
