@@ -60,6 +60,24 @@
         <el-form-item label="商城信息">
           <el-input v-model="marketInfoDialog.marketMeta"></el-input>
         </el-form-item>
+        <el-form-item label="商城图片">
+          <el-upload
+            class="upload-demo"
+            action="http://localhost:8090/goods/upload/image"
+            ref="marketImageUpload"
+            list-type="picture-card"
+            :auto-upload="false"
+            name="picture"
+            :on-preview="handlePictureCardPreview"
+            :on-remove="handleRemove"
+            :on-success="handleMarketImageSuccess"
+            :before-upload="beforeMarketImageUpload"
+            :file-list="marketImageList"
+            multiple
+          >
+            <i class="el-icon-plus avatar"></i>
+          </el-upload>
+        </el-form-item>
       </el-form>
       <span slot="footer" class="dialog-footer">
         <el-button @click="dialogVision = false">取 消</el-button>
@@ -81,13 +99,19 @@ import Title from "../../components/title.vue";
   },
 })
 export default class MallManage extends Vue {
+  public marketImageList = []; // 商城图片列表
+  public previewImage = ""; // 预览图片
+  public previewVisible = false; // 图片预览弹窗
+
   public marketInfo = {
     marketName: "",
     marketRecommend: [],
     marketMeta: "",
   };
+
   public dialogVision = false;
   public dialogTitle = "修改商城信息";
+
   public marketInfoDialog = {
     marketName: "",
     marketRecommend: "",
@@ -107,10 +131,41 @@ export default class MallManage extends Vue {
       label: "上架时间(新->旧)",
     },
   ];
+
   _: LoDashStatic = window["_"];
+
   openChangeMallInfo() {
     this.dialogVision = true;
   }
+
+  handlePictureCardPreview(file: any) {
+    this.previewImage = file.url;
+    this.previewVisible = true;
+  }
+
+  handleRemove(file: any) {
+    this.marketImageList = this.marketImageList.filter((item: any) => {
+      return item.uid !== file.uid;
+    });
+  }
+
+  handleMarketImageSuccess(res: { data: any }, file: any, fileList: any) {
+    (this.marketImageList as Array<string>).push(res.data);
+  }
+  
+  beforeMarketImageUpload(file: any) {
+    const isJPG = file.type === "image/jpeg";
+    const isLt2M = file.size / 1024 / 1024 < 10;
+
+    if (!isJPG) {
+      this.$message.error("上传头像图片只能是 JPG 格式!");
+    }
+    if (!isLt2M) {
+      this.$message.error("上传头像图片大小不能超过 10MB!");
+    }
+    return isJPG && isLt2M;
+  }
+
   async mounted(): Promise<void> {
     const res = await this.axios.get("/marketInfo/getMarketInfo");
     this.marketInfoDialog = this._.cloneDeep(res.data.data[0]);

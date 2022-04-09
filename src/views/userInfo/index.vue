@@ -21,16 +21,14 @@
         </div>
       </div>
     </div>
-    <div class="infoCard">
-      <div class="infoTitle">登录记录</div>
-      <div class="infoText">
-        {{ userInfo.adminRole === 0 ? "超级管理员" : "管理员" }}
+    <div class="infoBigList">
+      <div class="infoBigCard">
+        <div class="infoTitle">登录记录</div>
+        <div class="infoLogTable"></div>
       </div>
-    </div>
-    <div class="infoCard">
-      <div class="infoTitle">登录分析</div>
-      <div class="infoText">
-        {{ userInfo.adminRole === 0 ? "超级管理员" : "管理员" }}
+      <div class="infoBigCard">
+        <div class="infoTitle">登录分析</div>
+        <div class="infoAnalysisChartDom"></div>
       </div>
     </div>
   </div>
@@ -75,15 +73,44 @@ export default class userInfo extends Vue {
     margin-top: 20px;
     margin-left: 20px;
     background: #fff;
-    border-radius: 15px;
+    box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.05);
+    border-radius: 2px;
+    // border-radius: 15px;
     display: flex;
     flex-direction: column;
-    // justify-content: center;
     align-items: center;
     text-align: center;
     justify-content: space-between;
     .infoTitle {
       font-size: 32px;
+      font-weight: bold;
+    }
+    .infoText {
+      font-size: 24px;
+      color: #666;
+    }
+  }
+}
+.infoBigList {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin-top: 20px;
+  .infoBigCard {
+    width: 47%;
+    height: 450px;
+    padding: 40px;
+    margin-top: 20px;
+    margin-left: 20px;
+    background: #fff;
+    border-radius: 2px;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.05);
+    align-items: left;
+
+    .infoTitle {
+      font-size: 24px;
       font-weight: bold;
     }
     .infoText {
