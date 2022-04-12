@@ -1,12 +1,17 @@
 <template>
   <div>
-    <img class="logo" src="../../assets/logo.png" />
-    <h1 class="title">欢迎来到xxxxx网上商城</h1>
-    <el-carousel height="450px" style="margin-top: 40px">
-      <el-carousel-item v-for="item in 4" :key="item">
-        <h3 class="small">{{ item }}</h3>
-      </el-carousel-item>
-    </el-carousel>
+    <!-- <img class="logo" src="../../assets/logo.png" /> -->
+    <h1 class="title">欢迎来到{{ marketInfo.marketName }}</h1>
+    <div class="carousel">
+      <el-carousel height="630px" style="margin-top: 10px">
+        <el-carousel-item
+          v-for="(image, index) in marketInfo.marketImages.split(',')"
+          :key="index"
+        >
+          <img :src="`http://localhost:8090/images/${image}`" alt="" />
+        </el-carousel-item>
+      </el-carousel>
+    </div>
   </div>
 </template>
 
@@ -16,7 +21,17 @@ import Component from "vue-class-component";
 @Component({
   components: {},
 })
-export default class homeIndex extends Vue {}
+export default class homeIndex extends Vue {
+  /**
+   * @todo 修改为vuex
+   */
+  marketInfo = {};
+
+  async created() {
+    const res = await this.axios.get("/marketInfo/getMarketInfo");
+    this.marketInfo = res.data.data[0];
+  }
+}
 </script>
 <style lang="scss" scoped>
 .logo {
@@ -31,19 +46,21 @@ export default class homeIndex extends Vue {}
   color: #2c3e50;
 }
 
-.el-carousel__item h3 {
-  color: #475669;
-  font-size: 14px;
-  opacity: 0.75;
-  line-height: 150px;
-  margin: 0;
-}
+.carousel {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  .el-carousel {
+    width: 1440px;
+  }
 
-.el-carousel__item:nth-child(2n) {
-  background-color: #99a9bf;
-}
-
-.el-carousel__item:nth-child(2n + 1) {
-  background-color: #d3dce6;
+  .el-carousel__item h3 {
+    color: #475669;
+    font-size: 14px;
+    opacity: 0.75;
+    line-height: 150px;
+    margin: 0;
+  }
 }
 </style>

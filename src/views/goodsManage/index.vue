@@ -286,13 +286,9 @@ export default class GoodsManage extends Vue {
    */
   public handleGoodsListSuccess(res: { data: any }, file: any, fileList: any) {
     (this.sendGoodsImageList as Array<string>).push(res.data);
-    // console.log(this.sendGoodsImageList);
-    // this.goodsImageList = [];
   }
   public handleGoodsDescribeSuccess(res: any, file: any, fileList: any) {
     (this.sendGoodsImageDescribeList as Array<string>).push(res.data);
-    // console.log(this.sendGoodsImageDescribeList);
-    // this.goodsDescribeImageList = [];
   }
 
   /**

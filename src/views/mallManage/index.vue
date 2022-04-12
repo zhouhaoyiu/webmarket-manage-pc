@@ -18,10 +18,28 @@
         "
       /> -->
       <div class="marketInfoLine">
-        推荐商品：{{ marketInfo.marketRecommend }}
+        推荐方式：{{ ShoppingRecommend }}
       </div>
       <div class="marketInfoLine">商城信息：{{ marketInfo.marketMeta }}</div>
-      <div class="marketInfoLine">首页轮播图：{{ marketInfo.marketMeta }}</div>
+      <div
+        class="marketInfoLine"
+        style="display: flex; flex-direction: column; flex-wrap: wrap"
+      >
+        <div style="min-width: max-content">首页轮播图：</div>
+        <div style="display: flex; flex-wrap: wrap">
+          <div
+            v-for="(image, index) in marketInfo.marketImages.split(',')"
+            :key="index"
+            style="margin-right: 10px"
+          >
+            <img
+              :src="`http://localhost:8090/images/${image}`"
+              width="400"
+              height="200"
+            />
+          </div>
+        </div>
+      </div>
     </div>
     <el-dialog
       :title="dialogTitle"
@@ -41,11 +59,10 @@
         <el-form-item label="商城名称">
           <el-input v-model="marketInfoDialog.marketName"></el-input>
         </el-form-item>
-        <el-form-item label="推荐商品">
+        <el-form-item label="推荐方式">
           <el-select
             v-model="marketInfoDialog.marketRecommend"
             filterable
-            multiple
             placeholder="请选择"
           >
             <el-option
@@ -60,7 +77,7 @@
         <el-form-item label="商城信息">
           <el-input v-model="marketInfoDialog.marketMeta"></el-input>
         </el-form-item>
-        <el-form-item label="商城图片">
+        <el-form-item label="商城图片" v-if="!submitStatus">
           <el-upload
             class="upload-demo"
             action="http://localhost:8090/goods/upload/image"
@@ -80,9 +97,14 @@
         </el-form-item>
       </el-form>
       <span slot="footer" class="dialog-footer">
-        <el-button @click="dialogVision = false">取 消</el-button>
-        <el-button type="primary" @click="dialogVision = false"
-          >确 定</el-button
+        <el-button @click="submitImage">提交图片</el-button>
+        <el-button @click="dialogVision = false" type="danger">取 消</el-button>
+        <el-button
+          :disabled="!submitStatus"
+          type="primary"
+          @click="submitMarketInfo"
+        >
+          确 定</el-button
         >
       </span>
     </el-dialog>
@@ -100,13 +122,16 @@ import Title from "../../components/title.vue";
 })
 export default class MallManage extends Vue {
   public marketImageList = []; // 商城图片列表
+  public sendMarketImageList = []; // 发送商城图片列表
   public previewImage = ""; // 预览图片
   public previewVisible = false; // 图片预览弹窗
+  public submitStatus = false; // 提交状态
 
   public marketInfo = {
     marketName: "",
     marketRecommend: [],
     marketMeta: "",
+    marketImages: "",
   };
 
   public dialogVision = false;
@@ -134,6 +159,29 @@ export default class MallManage extends Vue {
 
   _: LoDashStatic = window["_"];
 
+  submitImage() {
+    (this.$refs.marketImageUpload as any).submit();
+    this.submitStatus = true;
+  }
+
+  resetData = () => {
+    this.marketImageList = [];
+    this.sendMarketImageList = [];
+    this.submitStatus = false;
+    this.mounted();
+  };
+
+  async submitMarketInfo() {
+    // console.log(this.sendMarketImageList.toString());
+    const data = await this.axios.post("/marketInfo/setMarketInfo", {
+      marketName: this.marketInfoDialog.marketName,
+      marketRecommend: this.marketInfoDialog.marketRecommend,
+      marketMeta: this.marketInfoDialog.marketMeta,
+      marketImages: this.sendMarketImageList.toString(),
+    });
+    // console.log(data);
+  }
+
   openChangeMallInfo() {
     this.dialogVision = true;
   }
@@ -144,15 +192,15 @@ export default class MallManage extends Vue {
   }
 
   handleRemove(file: any) {
-    this.marketImageList = this.marketImageList.filter((item: any) => {
-      return item.uid !== file.uid;
-    });
+    this.marketImageList = this.marketImageList.filter(
+      (item: any) => item.uid !== file.uid
+    );
   }
 
   handleMarketImageSuccess(res: { data: any }, file: any, fileList: any) {
-    (this.marketImageList as Array<string>).push(res.data);
+    (this.sendMarketImageList as Array<string>).push(res.data);
   }
-  
+
   beforeMarketImageUpload(file: any) {
     const isJPG = file.type === "image/jpeg";
     const isLt2M = file.size / 1024 / 1024 < 10;
@@ -163,13 +211,38 @@ export default class MallManage extends Vue {
     if (!isLt2M) {
       this.$message.error("上传头像图片大小不能超过 10MB!");
     }
-    return isJPG && isLt2M;
+    if (isJPG && isLt2M) {
+      (this.marketImageList as Array<File>).push(file);
+    } else {
+      return false;
+    }
   }
 
   async mounted(): Promise<void> {
     const res = await this.axios.get("/marketInfo/getMarketInfo");
     this.marketInfoDialog = this._.cloneDeep(res.data.data[0]);
+    this.marketImageList = this._.cloneDeep(
+      res.data.data[0].marketImages.split(",").map((item: any) => {
+        return {
+          url: `http://localhost:8090/images/${item}`,
+          status: "done",
+          uid: item,
+          name: item,
+        };
+      })
+    );
+    console.log(this.marketImageList);
     (this.marketInfo as unknown) = this._.cloneDeep(this.marketInfoDialog);
+  }
+
+  get ShoppingRecommend() {
+    let str = "";
+    this.options.forEach((item: any) => {
+      if (item.value === this.marketInfoDialog.marketRecommend) {
+        str =  item.label;
+      }
+    });
+    return str;
   }
 }
 </script>

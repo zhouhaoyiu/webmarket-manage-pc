@@ -8,8 +8,7 @@
     ></side-bar>
     <router-view
       style="
-        padding: 2% 3%;
-        background: rgb(233, 233, 233, 0.5);
+        padding: 2% 3%;       
         width: 100%;
         height: 100%;
       "
