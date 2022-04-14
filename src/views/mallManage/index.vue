@@ -168,18 +168,23 @@ export default class MallManage extends Vue {
     this.marketImageList = [];
     this.sendMarketImageList = [];
     this.submitStatus = false;
+    this.$router.go(0);
     this.mounted();
   };
 
   async submitMarketInfo() {
     // console.log(this.sendMarketImageList.toString());
-    const data = await this.axios.post("/marketInfo/setMarketInfo", {
+    const res = await this.axios.post("/marketInfo/setMarketInfo", {
       marketName: this.marketInfoDialog.marketName,
       marketRecommend: this.marketInfoDialog.marketRecommend,
       marketMeta: this.marketInfoDialog.marketMeta,
       marketImages: this.sendMarketImageList.toString(),
     });
-    // console.log(data);
+    if(res.data.code === 1){
+      this.$message.success("修改成功");
+      this.dialogVision = false;
+      this.resetData();
+    }
   }
 
   openChangeMallInfo() {
@@ -221,17 +226,6 @@ export default class MallManage extends Vue {
   async mounted(): Promise<void> {
     const res = await this.axios.get("/marketInfo/getMarketInfo");
     this.marketInfoDialog = this._.cloneDeep(res.data.data[0]);
-    this.marketImageList = this._.cloneDeep(
-      res.data.data[0].marketImages.split(",").map((item: any) => {
-        return {
-          url: `http://localhost:8090/images/${item}`,
-          status: "done",
-          uid: item,
-          name: item,
-        };
-      })
-    );
-    console.log(this.marketImageList);
     (this.marketInfo as unknown) = this._.cloneDeep(this.marketInfoDialog);
   }
 

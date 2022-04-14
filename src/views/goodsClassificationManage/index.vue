@@ -168,7 +168,6 @@ export default class GoodsClassificationManage extends Vue {
 .goodsClassificationManage {
   height: 100%;
   width: 100%;
-  background: red;
   .addClassificication {
     margin-bottom: 20px;
   }
