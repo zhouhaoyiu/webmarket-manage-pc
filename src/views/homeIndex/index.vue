@@ -18,6 +18,12 @@
 <script lang="ts">
 import Vue from "vue";
 import Component from "vue-class-component";
+type MarketInfo = {
+  marketName: string;
+  marketMeta: string;
+  marketImages: string;
+  marketRecommend: string;
+};
 @Component({
   components: {},
 })
@@ -25,11 +31,16 @@ export default class homeIndex extends Vue {
   /**
    * @todo 修改为vuex
    */
-  marketInfo = {};
+  marketInfo: MarketInfo = {
+    marketName: "",
+    marketMeta: "",
+    marketImages: "",
+    marketRecommend: "",
+  };
 
   async created() {
     const res = await this.axios.get("/marketInfo/getMarketInfo");
-    this.marketInfo = res.data.data[0];
+    this.marketInfo = window._.cloneDeep(res.data.data[0]);
   }
 }
 </script>

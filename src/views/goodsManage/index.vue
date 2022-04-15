@@ -129,7 +129,7 @@
         label="商品库存"
       ></el-table-column>
       <el-table-column align="center" label="商品图片">
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <!-- {{ scope.row.goodImages}} -->
           <div
             style="display: flex; flex-direction: row; justify-content: center"
@@ -156,7 +156,7 @@
         label="商品描述图片"
         width="200px"
       >
-        <template slot-scope="scope">
+        <template v-slot="scope">
           <div
             style="display: flex; flex-direction: row; justify-content: center"
             v-if="scope.row.goodDescribeImages"
@@ -177,7 +177,7 @@
         </template>
       </el-table-column>
       <el-table-column align="center" label="商品描述"
-        ><template slot-scope="scope">
+        ><template v-slot="scope">
           <div>
             <el-button
               type="primary"

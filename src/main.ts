@@ -10,6 +10,7 @@ import "./assets/reset.scss";
 import "./assets/element-variables.scss";
 import _ from "lodash";
 
+
 Vue.config.productionTip = false;
 Vue.prototype._ = _;
 Vue.prototype.$axios = axios;

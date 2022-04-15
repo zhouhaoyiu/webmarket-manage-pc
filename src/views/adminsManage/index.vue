@@ -24,14 +24,14 @@
         >
         </el-table-column>
         <el-table-column align="center" label="用户身份">
-          <template slot-scope="scope">
+          <template v-slot="scope">
             <span>
               {{ scope.row.adminRole === 0 ? "超级管理员" : "管理员" }}
             </span>
           </template>
         </el-table-column>
         <el-table-column fixed="right" align="center" label="操作">
-          <template slot-scope="scope">
+          <template v-slot="scope">
             <div
               style="width: 100%; display: flex; justify-content: center"
               v-if="scope.row.userName !== $store.state.adminInfo.userName"
@@ -165,7 +165,7 @@ export default class adminsManage extends Vue {
         },
         xAxis: {
           type: "category",
-          data: ["管理员", "超级管理员"],
+          data: ["超级管理员", "管理员"],
         },
         grid: {
           left: "10%",

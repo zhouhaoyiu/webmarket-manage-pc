@@ -9,7 +9,7 @@
           prop="username"
         ></el-table-column>
         <el-table-column align="center" label="顾客性别">
-          <template slot-scope="scope">
+          <template v-slot="scope">
             <div>{{ scope.row.gender ? "男" : "女" }}</div>
           </template>
         </el-table-column>
@@ -20,7 +20,7 @@
         ></el-table-column>
         <el-table-column
           align="center"
-          label="顾客id"
+          label="顾客uuid"
           prop="useruuid"
         ></el-table-column>
         <el-table-column
@@ -29,7 +29,7 @@
           prop="address"
         ></el-table-column>
         <el-table-column align="center" label="操作" width="180" fixed="right">
-          <template slot-scope="scope">
+          <template v-slot="scope">
             <div>
               <el-button
                 @click="deleteCustomer(scope.row)"
