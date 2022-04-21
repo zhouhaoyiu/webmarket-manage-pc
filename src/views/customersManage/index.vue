@@ -60,13 +60,8 @@ export default class CustomersManage extends Vue {
   public customer = [];
   _ = window._;
 
-  async mounted(): Promise<void> {
-    await this.getCustomers();
-  }
-  async getCustomers(): Promise<void> {
-    const res = await this.axios.get("/user/allUsers");
-    console.log(res);
-    this.customer = this._.cloneDeep(res.data.data);
+  public mounted(): void {
+    this.customer = window._.cloneDeep(this.$store.getters.getCustomersList);
   }
 
   deleteCustomer(row: any) {

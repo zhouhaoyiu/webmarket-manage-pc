@@ -7,11 +7,7 @@
       @logOut="logOut"
     ></side-bar>
     <router-view
-      style="
-        padding: 2% 3%;       
-        width: 100%;
-        height: 100%;
-      "
+      style="padding: 2% 3%; width: 100%; height: 100%"
     ></router-view>
   </div>
 </template>
@@ -19,6 +15,7 @@
 <script lang="ts">
 import SideBar from "@/components/sideBar.vue";
 import { GET_ADMIN_INFO } from "@/store/type/getter-type";
+import getCustomers from "@/utils/getCustomers";
 import getGoods from "@/utils/getGoods";
 import getGoodsClassification from "@/utils/getGoodsClassifacation";
 import { Component, Vue } from "vue-property-decorator";
@@ -55,10 +52,10 @@ export default class Home extends Vue {
     if (!localStorage.getItem("UUid")) {
       this["$router"].push("/login");
     }
-   getGoodsClassification();
-   getGoods();
+    await getGoodsClassification();
+    await getGoods();
+    await getCustomers();
   }
-
 }
 </script>
 

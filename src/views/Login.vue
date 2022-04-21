@@ -38,6 +38,7 @@
 import { Component, Vue } from "vue-property-decorator";
 import { JSEncrypt } from "jsencrypt";
 import { SET_ADMIN_INFO } from "@/store/type/mutation-type";
+import dayjs from "dayjs";
 
 @Component({
   components: {},
@@ -59,13 +60,17 @@ export default class Login extends Vue {
       passWord: jsencrypt.encrypt(this.password),
     });
     if (res.data["code"] === "0") {
-      // localStorage.setItem("token", res.data.data.token);
       localStorage.setItem("userName", res.data.data.userName);
       localStorage.setItem("UUid", res.data.data.adminUUid);
       this.$store.commit(SET_ADMIN_INFO, res.data.data);
       this["$message"]({
         message: "登录成功",
         type: "success",
+      });
+      this.axios.post("adminLog/addAdminLog", {
+        adminUUid: res.data.data.adminUUid,
+        logTime: dayjs().format("YYYY-MM-DD HH:mm:ss"),
+        info: res.data.data.userName + "登录",
       });
       this["$router"].push("/home");
     } else {

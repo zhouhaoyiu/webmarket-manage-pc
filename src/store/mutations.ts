@@ -21,3 +21,8 @@ export const setGoodsClassificationTree = function (
 export const setGoodsList = function (state: any, list: any): void {
   state.goodsList = list;
 };
+
+export const setCustomersList = function (state: any, list: any): void {
+  state.customersList = list;
+}
+

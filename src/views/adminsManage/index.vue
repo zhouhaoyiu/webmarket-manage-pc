@@ -124,7 +124,7 @@ export default class adminsManage extends Vue {
   };
   _: LoDashStatic = window._;
 
-  sendEmail(emailAddress: string): void {
+  public sendEmail(emailAddress: string): void {
     const url = `mailto:${emailAddress}`;
     window.open(url, "_blank");
   }

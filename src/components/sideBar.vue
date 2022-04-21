@@ -94,6 +94,11 @@ export default class SideBar extends Vue {
       path: "userInfo",
       role: 1,
     },
+     {
+      name: "数据分析",
+      path: "dataAnalysis",
+      role: 1,
+    },
   ];
 
   public emitGoPage(path: string, index: number): void {

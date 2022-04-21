@@ -6,3 +6,11 @@ export type adminInfoType = {
   phoneNumber: string;
   userName: string;
 };
+
+export type adminLog = {
+  adminLogid: number;
+  adminLogUUid: string;
+  adminUUid: string;
+  logTime: string;
+  info: string;
+};

@@ -92,6 +92,14 @@ const routes: Array<RouteConfig> = [
             /* webpackChunkName: "goodsClassificationManage" */ "../views/goodsClassificationManage/index.vue"
           ),
       },
+      {
+        path: "/home/dataAnalysis",
+        name: "DataAnalysis",
+        component: () =>
+          import(
+            /* webpackChunkName: "dataAnalysis" */ "../views/dataAnalysis/index.vue"
+          ),
+      },
     ],
   },
   // {

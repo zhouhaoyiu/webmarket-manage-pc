@@ -6,9 +6,9 @@
       </el-table-column>
       <el-table-column align="center" label="商品名称" prop="goodName">
       </el-table-column>
-      <el-table-column align="center" label="访问数量" prop="visitCount">
+      <el-table-column align="center" label="访问数量" prop="goodVisitCount">
       </el-table-column>
-      <el-table-column align="center" label="订单数量" prop="orderCount">
+      <el-table-column align="center" label="销量数量" prop="goodSellCount">
       </el-table-column>
     </el-table>
   </div>

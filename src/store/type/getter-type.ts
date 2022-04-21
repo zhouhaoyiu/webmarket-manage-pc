@@ -6,3 +6,5 @@ export const GET_GOODS_CLASSIFICATION_LIST = "getGoodsClassificationList";
 export const GET_GOODS_CLASSIFICATION_TREE = "getGoodsClassificationTree";
 //  商品列表
 export const GET_GOODS_LIST = "getGoodsList";
+
+export const GET_CUSTOMERS_LIST = "getCustomersList";

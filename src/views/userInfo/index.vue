@@ -23,11 +23,20 @@
     </div>
     <div class="infoBigList">
       <div class="infoBigCard">
-        <div class="infoTitle">登录记录</div>
-        <div class="infoLogTable"></div>
+        <div class="infoTitle">操作记录</div>
+        <div class="infoLogTable">
+          <div
+            class="infoLog"
+            v-for="(log, logIndex) in myLogArray"
+            :key="logIndex"
+          >
+            <div class="logTime">{{ log.logTime }}</div>
+            <div class="logInfo">{{ log.info }}</div>
+          </div>
+        </div>
       </div>
       <div class="infoBigCard">
-        <div class="infoTitle">登录分析</div>
+        <div class="infoTitle">操作分析</div>
         <div class="infoAnalysisChartDom"></div>
       </div>
     </div>
@@ -37,18 +46,67 @@
 <script lang="ts">
 import Vue from "vue";
 import Component from "vue-class-component";
-import { adminInfoType } from "@/types/type";
+import { adminInfoType, adminLog } from "@/types/type";
 import { GET_ADMIN_INFO } from "@/store/type/getter-type";
 import Title from "../../components/title.vue";
+import * as echarts from "echarts";
 @Component({
   components: {
     Title,
   },
 })
 export default class userInfo extends Vue {
-  mounted(): void {
-    //
-    console.log(this.$store.getters[GET_ADMIN_INFO]);
+  public myLogArray: adminLog[] = [];
+  async mounted(): Promise<void> {
+    const res = await this.axios.get("/adminLog/getAdminLogByAdminUUid", {
+      params: {
+        adminUUid: this.$store.getters[GET_ADMIN_INFO].adminUUid,
+      },
+    });
+    if (res.data.code === 1) {
+      this.myLogArray = window._.cloneDeep(res.data.data);
+    }
+
+    const myChart = echarts.init(
+      document.querySelector(".infoAnalysisChartDom") as HTMLDivElement
+    );
+    myChart.setOption({
+      title: {
+        text: "操作分析",
+      },
+      tooltip: {
+        trigger: "axis",
+      },
+      legend: {
+        data: ["操作次数"],
+      },
+      grid: {
+        left: "3%",
+        right: "4%",
+        bottom: "3%",
+        containLabel: true,
+      },
+      toolbox: {
+        feature: {
+          saveAsImage: {},
+        },
+      },
+      xAxis: {
+        type: "category",
+        boundaryGap: false,
+        data: this.myLogArray.map((log: adminLog) => log.logTime),
+      },
+      yAxis: {
+        type: "value",
+      },
+      series: [
+        {
+          name: "操作次数",
+          type: "line",
+          data: this.myLogArray.map((log: adminLog) => log),
+        },
+      ],
+    });
   }
   get userInfo(): adminInfoType {
     return this.$store.getters[GET_ADMIN_INFO];
@@ -112,6 +170,33 @@ export default class userInfo extends Vue {
     .infoTitle {
       font-size: 24px;
       font-weight: bold;
+    }
+    .infoLogTable {
+      width: 100%;
+      height: 300px;
+      overflow-y: auto;
+      overflow-x: hidden;
+      .infoLog {
+        width: 400px;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        align-items: left;
+        margin-top: 10px;
+        .logTime {
+          font-size: 18px;
+          color: #666;
+        }
+        .logInfo {
+          font-size: 18px;
+          color: #666;
+        }
+      }
+    }
+    .infoAnalysisChartDom{
+      width: 100%;
+      height: 300px;
     }
     .infoText {
       font-size: 24px;

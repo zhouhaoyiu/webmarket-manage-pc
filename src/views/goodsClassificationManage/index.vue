@@ -93,6 +93,7 @@ import Vue from "vue";
 import Component from "vue-class-component";
 import Title from "../../components/title.vue";
 import getGoodsClassification from "@/utils/getGoodsClassifacation";
+import { addAdminLog } from "@/utils/addAdminLog";
 
 @Component({
   components: {
@@ -137,7 +138,8 @@ export default class GoodsClassificationManage extends Vue {
     console.log(res.data);
     if (res.data.code === 0) {
       this.$message.success("添加成功");
-      getGoodsClassification();
+      await getGoodsClassification();
+      await addAdminLog("添加商品分类");
     } else {
       this.$message.error(res.data.msg);
     }
