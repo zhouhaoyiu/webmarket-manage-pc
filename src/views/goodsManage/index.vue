@@ -197,6 +197,7 @@
 
 <script lang="ts">
 import Title from "@/components/title.vue";
+import { addAdminLog } from "@/utils/addAdminLog";
 import Vue from "vue";
 import Component from "vue-class-component";
 @Component({
@@ -249,11 +250,12 @@ export default class GoodsManage extends Vue {
       goodImages: this.sendGoodsImageList.toString(),
       goodDescribeImages: this.sendGoodsImageDescribeList.toString(),
     };
-    
+
     const res = await this.axios.post("/goods/addGoods", data);
 
     if (res.data.code === 0) {
       this.$message.success("添加成功");
+      await addAdminLog("添加商品", this.form.name);
       this.resetData();
       this.addGoodsVisble = false;
     } else {

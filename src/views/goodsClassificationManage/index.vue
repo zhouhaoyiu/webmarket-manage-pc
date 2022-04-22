@@ -135,11 +135,10 @@ export default class GoodsClassificationManage extends Vue {
         parentId: this.form.parentId || -1,
       },
     });
-    console.log(res.data);
     if (res.data.code === 0) {
       this.$message.success("添加成功");
       await getGoodsClassification();
-      await addAdminLog("添加商品分类");
+      await addAdminLog("添加商品分类", this.form.classificationName);
     } else {
       this.$message.error(res.data.msg);
     }

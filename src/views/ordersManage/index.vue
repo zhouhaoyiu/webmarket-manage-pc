@@ -98,6 +98,7 @@
 </template>
 <script lang="ts">
 import Title from "@/components/title.vue";
+import { addAdminLog } from "@/utils/addAdminLog";
 import { Component, Vue, Watch } from "vue-property-decorator";
 type order = {
   orderid: Number;
@@ -190,6 +191,7 @@ export default class OrdersManage extends Vue {
       this.$message.success(res.data.msg);
       this.resetInfo();
       this.acceptDialog = false;
+      await addAdminLog("通过订单", this.dialogInfo.orderuuid);
       this.$forceUpdate();
     } else {
       this.$message.error(res.data.msg);
@@ -219,6 +221,7 @@ export default class OrdersManage extends Vue {
     if (res.data.code === 1) {
       this.$message.success(res.data.msg);
       this.resetInfo();
+      await addAdminLog("拒绝订单", this.dialogInfo.orderuuid);
       this.refuseDialog = false;
       this.$forceUpdate();
     } else {
