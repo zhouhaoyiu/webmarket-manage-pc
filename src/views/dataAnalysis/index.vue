@@ -137,6 +137,7 @@ export default class DataAnalysis extends Vue {
     const myChart = echarts.init(
       document.querySelector(".orderCountByTime")! as HTMLElement
     );
+
     myChart.setOption({
       title: {
         text: "销量/时间",
@@ -176,13 +177,14 @@ export default class DataAnalysis extends Vue {
         : b.goodNumber;
       return a;
     }, {});
-    // console.log(goodNumberTotelByGoodName);
+
     const xAxis = Object.keys(goodNumberTotelByGoodName);
     const yAxis = Object.values(goodNumberTotelByGoodName);
 
     const myChart = echarts.init(
       document.querySelector(".orderCountByGood")! as HTMLElement
     );
+
     myChart.setOption({
       title: {
         text: "销量/商品分类",
@@ -308,7 +310,8 @@ export default class DataAnalysis extends Vue {
       ],
     });
   }
-  visitCountByGoodClassification() {
+
+  public visitCountByGoodClassification() {
     const xAxis = Object.keys(
       this.userLog
         .filter((i: { type: string }) => i.type === "查看分类")
