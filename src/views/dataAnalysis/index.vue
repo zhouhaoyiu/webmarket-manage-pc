@@ -20,7 +20,12 @@
         >
         <el-radio-button
           :disabled="userLog.length === 0"
-          label="visitCountByGood"
+          label="visitCountByGoodName"
+          >访问量/商品名称</el-radio-button
+        >
+        <el-radio-button
+          :disabled="userLog.length === 0"
+          label="visitCountByGoodClassification"
           >访问量/商品分类</el-radio-button
         >
       </el-radio-group>
@@ -43,8 +48,13 @@
       ></div>
       <div
         id="echartDomBox"
-        class="visitCountByGood"
-        v-show="echartsDom === 'visitCountByGood'"
+        class="visitCountByGoodName"
+        v-show="echartsDom === 'visitCountByGoodName'"
+      ></div>
+      <div
+        id="echartDomBox"
+        class="visitCountByGoodClassification"
+        v-show="echartsDom === 'visitCountByGoodClassification'"
       ></div>
     </div>
   </div>
@@ -90,8 +100,10 @@ export default class DataAnalysis extends Vue {
       this.orderCountByGoodName();
     } else if (val === "visitCountByTime") {
       this.visitCountByTime();
-    } else if (val === "visitCountByGood") {
+    } else if (val === "visitCountByGoodName") {
       this.visitCountByGoodName();
+    } else if (val === "visitCountByGoodClassification") {
+      this.visitCountByGoodClassification();
     }
   }
 
@@ -242,9 +254,26 @@ export default class DataAnalysis extends Vue {
     });
   }
 
-  public visitCountByGoodName() {
+  public visitCountByGoodName(): void {
     const xAxis = Object.keys(
       this.userLog
+        .filter((i: { type: string }) => i.type === "查看商品")
+        .map((i: { gid: number }) => i.gid)
+        .reduce((a: Record<number, number>, b: number) => {
+          a[b] = a[b] ? a[b] + 1 : 1;
+          return a;
+        }, {})
+    ).map((i: string) => {
+      return (
+        this.$store.state.goodsList.find(
+          (j: { goodId: number }) => j.goodId === +i
+        )?.goodName || "错误分类"
+      );
+    });
+
+    const yAxis = Object.values(
+      this.userLog
+        .filter((i: { type: string }) => i.type === "查看商品")
         .map((i: { gid: number }) => i.gid)
         .reduce((a: any, b: any) => {
           a[b] = a[b] ? a[b] + 1 : 1;
@@ -252,22 +281,13 @@ export default class DataAnalysis extends Vue {
         }, {})
     );
 
-    const yAxis = Object.values(
-      this.userLog
-        .map((i: { gid: number }) => i.gid)
-        .reduce((a: any, b: any) => {
-          a[b] = a[b] ? a[b] + 1 : 1;
-          return a;
-        }, {})
-    );  
-
     const myChart = echarts.init(
-      document.querySelector(".visitCountByGood")! as HTMLElement
+      document.querySelector(".visitCountByGoodName")! as HTMLElement
     );
 
     myChart.setOption({
       title: {
-        text: "访问量/时间",
+        text: "访问量/商品名称",
         left: "center",
       },
       tooltip: {
@@ -283,7 +303,61 @@ export default class DataAnalysis extends Vue {
       series: [
         {
           data: yAxis,
-          type: "line",
+          type: "bar",
+        },
+      ],
+    });
+  }
+  visitCountByGoodClassification() {
+    const xAxis = Object.keys(
+      this.userLog
+        .filter((i: { type: string }) => i.type === "查看分类")
+        .map((i: { gid: number }) => i.gid)
+        .reduce((a: any, b: any) => {
+          a[b] = a[b] ? a[b] + 1 : 1;
+          return a;
+        }, {})
+    ).map((i: string) => {
+      return (
+        this.$store.state.goodsClassificationList.find(
+          (j: { classificationId: number }) => j.classificationId === +i
+        )?.classificationName || "错误分类"
+      );
+    });
+
+    const yAxis = Object.values(
+      this.userLog
+        .filter((i: { type: string }) => i.type === "查看分类")
+        .map((i: { gid: number }) => i.gid)
+        .reduce((a: any, b: any) => {
+          a[b] = a[b] ? a[b] + 1 : 1;
+          return a;
+        }, {})
+    );
+
+    const myChart = echarts.init(
+      document.querySelector(".visitCountByGoodClassification")! as HTMLElement
+    );
+
+    myChart.setOption({
+      title: {
+        text: "访问量/商品分类",
+        left: "center",
+      },
+      tooltip: {
+        trigger: "axis",
+      },
+      xAxis: {
+        type: "category",
+        data: xAxis,
+      },
+      yAxis: {
+        type: "value",
+      },
+      series: [
+        {
+          data: yAxis,
+          type: "bar",
         },
       ],
     });
@@ -293,6 +367,7 @@ export default class DataAnalysis extends Vue {
 
 <style lang="scss" scoped>
 #echartDomBox {
+  margin: 100px auto;
   width: 100%;
   height: 500px;
 }

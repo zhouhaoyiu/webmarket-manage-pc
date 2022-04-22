@@ -32,13 +32,14 @@
           >
             <div class="logTime">{{ log.logTime }}</div>
             <div class="logInfo">{{ log.info }}</div>
+            <div class="logRemark">{{ log.remark }}</div>
           </div>
         </div>
       </div>
       <div class="infoBigCard">
         <div class="infoTitle">
           <div>操作分析</div>
-          <el-radio-group v-model="chartsDom">
+          <el-radio-group style="margin-top:10px" v-model="chartsDom">
             <el-radio-button label="classificationAna"
               >分类分析</el-radio-button
             >
@@ -104,7 +105,7 @@ export default class userInfo extends Vue {
         data: ["操作次数"],
       },
       xAxis: {
-        data: ["添加商品", "添加商品分类", "处理订单", "添加商品属性值"],
+        data: ["添加商品", "添加商品分类", "通过订单", "登录次数"],
       },
       yAxis: {},
       series: [
@@ -115,10 +116,8 @@ export default class userInfo extends Vue {
             this.myLogArray.filter((item) => item.info === "添加商品").length,
             this.myLogArray.filter((item) => item.info === "添加商品分类")
               .length,
-            this.myLogArray.filter((item) => item.info === "处理订单")
-              .length,
-            this.myLogArray.filter((item) => item.info === "添加商品属性值")
-              .length, // 添加商品属性值
+            this.myLogArray.filter((item) => item.info === "通过订单").length,
+            this.myLogArray.filter((item) => item.info.match("登录")).length,
           ],
         },
       ],
@@ -149,7 +148,7 @@ export default class userInfo extends Vue {
       },
       tooltip: {},
       legend: {
-        data: ["操作次数"],        
+        data: ["操作次数"],
       },
       dataZoom: [
         {
@@ -266,18 +265,25 @@ export default class userInfo extends Vue {
       flex-direction: column;
       align-items: center;
       .infoLog {
-        width: 400px;
+        width: 100%;
         display: flex;
         flex-direction: row;
-        justify-content: space-between;
-        align-items: left;
+        // justify-content: space-between;
+        align-items: center;
         margin-top: 10px;
         .logTime {
+          width: 200px;
           font-size: 18px;
           color: #666;
         }
         .logInfo {
+          width: 150px;
           font-size: 18px;
+          color: #666;
+        }
+        .logRemark {
+          width: max-content;
+          font-size: 14px;
           color: #666;
         }
       }

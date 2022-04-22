@@ -258,6 +258,7 @@ export default class GoodsManage extends Vue {
       await addAdminLog("添加商品", this.form.name);
       this.resetData();
       this.addGoodsVisble = false;
+      this.$router.go(0);
     } else {
       this.$message.error("添加失败");
     }

@@ -13,4 +13,5 @@ export type adminLog = {
   adminUUid: string;
   logTime: string;
   info: string;
+  remark: string;
 };

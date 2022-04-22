@@ -139,6 +139,7 @@ export default class GoodsClassificationManage extends Vue {
       this.$message.success("添加成功");
       await getGoodsClassification();
       await addAdminLog("添加商品分类", this.form.classificationName);
+      this.$router.go(0);
     } else {
       this.$message.error(res.data.msg);
     }
