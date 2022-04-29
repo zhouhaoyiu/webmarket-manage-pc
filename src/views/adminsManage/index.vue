@@ -156,7 +156,6 @@ export default class adminsManage extends Vue {
 
     this.$nextTick(() => {
       let dom = document.querySelector(".admin-count-charts") as HTMLElement;
-      // console.log(dom);
       let myChart = echarts.init(dom);
       let option = {
         title: {
@@ -170,9 +169,6 @@ export default class adminsManage extends Vue {
         grid: {
           left: "10%",
           right: "10%",
-          // top: "10%",
-          // bottom: "10%",
-          // containLabel: true,
         },
         yAxis: {
           type: "value",

@@ -105,7 +105,7 @@ export default class userInfo extends Vue {
         data: ["操作次数"],
       },
       xAxis: {
-        data: ["添加商品", "添加商品分类", "通过订单", "登录次数"],
+        data: ["添加商品", "添加商品分类", "通过订单", "删除商品"],
       },
       yAxis: {},
       series: [
@@ -117,7 +117,7 @@ export default class userInfo extends Vue {
             this.myLogArray.filter((item) => item.info === "添加商品分类")
               .length,
             this.myLogArray.filter((item) => item.info === "通过订单").length,
-            this.myLogArray.filter((item) => item.info.match("登录")).length,
+            this.myLogArray.filter((item) => item.info.match("删除商品")).length,
           ],
         },
       ],
