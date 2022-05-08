@@ -16,17 +16,20 @@
       :visible.sync="addGoodsVisble"
     >
       <el-form
-        ref="form"
-        :model="form"
+        ref="addGoodsForm"
+        :model="addGoodsForm"
         label-position="left"
         label-width="120px"
         style="padding: 0 30px"
       >
         <el-form-item label="商品名称">
-          <el-input v-model="form.name"></el-input>
+          <el-input v-model="addGoodsForm.name"></el-input>
         </el-form-item>
         <el-form-item label="商品分类">
-          <el-select v-model="form.classification" placeholder="请选择商品分类">
+          <el-select
+            v-model="addGoodsForm.classification"
+            placeholder="请选择商品分类"
+          >
             <el-option
               v-for="(i, index) in GoodsClassifactionFilterList"
               :key="index"
@@ -37,7 +40,7 @@
         </el-form-item>
         <el-form-item label="商品价格">
           <el-input-number
-            v-model="form.price"
+            v-model="addGoodsForm.price"
             :precision="2"
             :step="0.01"
             step-strictly
@@ -49,7 +52,7 @@
           <el-input-number
             :step="1"
             step-strictly
-            v-model="form.stock"
+            v-model="addGoodsForm.stock"
             :min="0"
             :max="10000"
           ></el-input-number>
@@ -130,7 +133,6 @@
       ></el-table-column>
       <el-table-column align="center" label="商品图片">
         <template v-slot="scope">
-          <!-- {{ scope.row.goodImages}} -->
           <div
             style="display: flex; flex-direction: row; justify-content: center"
             v-if="scope.row.goodImages"
@@ -202,7 +204,7 @@
                 role="img"
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 448 512"
-                style="width: 10px; height: 10px;"
+                style="width: 10px; height: 10px"
               >
                 <path
                   data-v-11241ba2=""
@@ -229,12 +231,12 @@ import Component from "vue-class-component";
   },
 })
 export default class GoodsManage extends Vue {
-  public form = {
+  public addGoodsForm = {
     name: "",
     classification: "",
     price: 0,
     stock: 0,
-  };
+  }; // 新增商品表单数据
   public goodsList = [];
 
   public goodsImageList = [];
@@ -266,10 +268,10 @@ export default class GoodsManage extends Vue {
    */
   async submitForm() {
     const data = {
-      goodName: this.form.name,
-      goodClassification: this.form.classification,
-      goodPrice: this.form.price,
-      goodCount: this.form.stock,
+      goodName: this.addGoodsForm.name,
+      goodClassification: this.addGoodsForm.classification,
+      goodPrice: this.addGoodsForm.price,
+      goodCount: this.addGoodsForm.stock,
       goodImages: this.sendGoodsImageList.toString(),
       goodDescribeImages: this.sendGoodsImageDescribeList.toString(),
     };
@@ -278,7 +280,7 @@ export default class GoodsManage extends Vue {
 
     if (res.data.code === 0) {
       this.$message.success("添加成功");
-      await addAdminLog("添加商品", this.form.name);
+      await addAdminLog("添加商品", this.addGoodsForm.name);
       this.resetData();
       this.addGoodsVisble = false;
       this.$router.go(0);
@@ -290,7 +292,7 @@ export default class GoodsManage extends Vue {
    * 初始化数据
    */
   public resetData() {
-    this.form = {
+    this.addGoodsForm = {
       name: "",
       classification: "",
       price: 0,
