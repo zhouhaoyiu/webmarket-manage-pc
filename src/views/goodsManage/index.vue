@@ -237,23 +237,23 @@ export default class GoodsManage extends Vue {
     price: 0,
     stock: 0,
   }; // 新增商品表单数据
-  public goodsList = [];
+  public goodsList = []; // 商品列表
 
-  public goodsImageList = [];
-  public goodsDescribeImageList = [];
+  public goodsImageList = []; // 商品图片列表
+  public goodsDescribeImageList = []; // 商品描述图片列表
 
-  public sendGoodsImageList = [];
-  public sendGoodsImageDescribeList = [];
+  public sendGoodsImageList = []; // 发送使用的商品图片列表
+  public sendGoodsImageDescribeList = []; // 发送使用的商品描述图片列表
 
-  public addGoodsVisble = false;
-  public previewImage = "";
+  public addGoodsVisble = false; // 新增商品弹窗状态
+  public previewImage = ""; // 预览图片地址
 
-  public previewVisible = false;
+  public previewVisible = false; // 预览图片弹窗状态
 
-  public sendBtn = false;
+  public sendBtn = false; // 发送按钮状态
 
-  public editGoodsDescribeVisble = false;
-  public editGoodsDescribeIndex = 0;
+  public editGoodsDescribeVisble = false; // 编辑商品描述弹窗状态
+  public editGoodsDescribeIndex = 0; // 编辑商品描述弹窗索引
 
   /**
    * @event 商品图片上传

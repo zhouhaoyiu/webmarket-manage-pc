@@ -5,28 +5,19 @@
       <el-button type="primary" @click="addGoodsClassificationVisible = true">
         添加分类
       </el-button>
-      <el-button
-        type="primary"
-        @click="deleteGoodsClassifacitionVisible = true"
-      >
+      <el-button type="primary" @click="deleteGoodsClassifacitionVisible = true">
         删除分类
       </el-button>
+      <!-- 添加分类的弹窗 -->
       <el-dialog title="商品分类信息" :visible="addGoodsClassificationVisible">
         <el-form :model="form" ref="form" label-width="80px">
           <el-form-item label="分类名称">
-            <el-input
-              v-model="form.classificationName"
-              placeholder="请输入分类名称"
-            ></el-input>
+            <el-input v-model="form.classificationName" placeholder="请输入分类名称"></el-input>
           </el-form-item>
           <el-form-item label="上级分类">
             <el-select v-model="form.parentId" placeholder="请选择">
-              <el-option
-                v-for="(i, index) in goodsClassificationList"
-                :key="index"
-                :label="i.classificationName"
-                :value="i.classificationId"
-              >
+              <el-option v-for="(i, index) in goodsClassificationList" :key="index" :label="i.classificationName"
+                :value="i.classificationId">
               </el-option>
             </el-select>
           </el-form-item>
@@ -36,31 +27,21 @@
           <el-button type="primary" @click="submitForm()">提交</el-button>
         </div>
       </el-dialog>
-      <el-dialog
-        title="删除商品分类"
-        :visible="deleteGoodsClassifacitionVisible"
-        center
-        width="400px"
-      >
+      <!-- 删除分类的弹窗 -->
+      <el-dialog title="删除商品分类" :visible="deleteGoodsClassifacitionVisible" center width="400px">
         <el-form :model="form" ref="deleteForm">
           <el-form-item label="请选择删除的分类">
             <el-select v-model="deleteClassificationId">
-              <el-option
-                v-for="(i, index) in goodsClassificationList"
-                :key="index"
-                :label="i.classificationName"
-                :value="i.classificationId"
-              >
+              <el-option v-for="(i, index) in goodsClassificationList" :key="index" :label="i.classificationName"
+                :value="i.classificationId">
               </el-option>
             </el-select>
-            <div
-              style="
+            <div style="
                 font-size: 12px;
                 color: grey;
                 text-align: center;
                 margin-top: 30px;
-              "
-            >
+              ">
               <span>提示：</span>
               <span>删除分类会删除所有子分类</span>
             </div>
@@ -78,12 +59,8 @@
       </el-dialog>
     </div>
     <div class="goodsClassficationTree">
-      <el-tree
-        :data="goodsClassificationTree"
-        :props="defaultProps"
-        @node-click="handleNodeClick"
-        :defaultExpandAll="true"
-      ></el-tree>
+      <el-tree :data="goodsClassificationTree" :props="defaultProps" @node-click="handleNodeClick"
+        :defaultExpandAll="true"></el-tree>
     </div>
   </div>
 </template>
@@ -109,7 +86,7 @@ export default class GoodsClassificationManage extends Vue {
   };
   public deleteClassificationId = -1;
 
-  public cancel() {
+  public cancel(): void {
     this.addGoodsClassificationVisible = false;
   }
   public defaultProps = {
@@ -117,25 +94,25 @@ export default class GoodsClassificationManage extends Vue {
     label: "classificationName",
   };
   public handleNodeClick(data: any) {
-    console.log(data);
+    void 0;
   }
 
-  get goodsClassificationTree() {
+  get goodsClassificationTree(): any[] {
     return this.$store.getters.getGoodsClassificationTree;
   }
 
-  get goodsClassificationList() {
+  get goodsClassificationList(): any[] {
     return this.$store.getters.getGoodsClassificationList;
   }
 
-  async submitForm() {
+  async submitForm(): Promise<void> {
     const res = await this.axios.get("/goodsClassification/addClassification", {
       params: {
-        classificationName: this.form.classificationName,
-        parentId: this.form.parentId || -1,
+        classificationName: this.form.classificationName, // 分类名称
+        parentId: this.form.parentId || -1, // 如果没有上级分类，则默认为-1
       },
     });
-    
+
     if (res.data.code === 0) {
       this.$message.success("添加成功");
       await getGoodsClassification();
@@ -157,7 +134,7 @@ export default class GoodsClassificationManage extends Vue {
     );
   }
 
-  mounted(): void {
+  public mounted(): void {
     getGoodsClassification();
   }
 }
@@ -168,12 +145,15 @@ export default class GoodsClassificationManage extends Vue {
 .el-dialog--center .el-dialog__body {
   padding: 30px 20px 0px 20px;
 }
+
 .goodsClassificationManage {
   height: 100%;
   width: 100%;
+
   .addClassificication {
     margin-bottom: 20px;
   }
+
   .goodsClassficationTree {
     background: white;
     padding: 20px;
