@@ -4,10 +4,7 @@
     <h1 class="title">欢迎来到{{ marketInfo.marketName }}</h1>
     <div class="carousel">
       <el-carousel height="630px" style="margin-top: 10px">
-        <el-carousel-item
-          v-for="(image, index) in marketInfo.marketImages.split(',')"
-          :key="index"
-        >
+        <el-carousel-item v-for="(image, index) in marketInfo.marketImages.split(',')" :key="index">
           <img :src="`http://localhost:8090/images/${image}`" alt="" />
         </el-carousel-item>
       </el-carousel>
@@ -51,6 +48,7 @@ export default class homeIndex extends Vue {
   margin: 0 auto;
   display: block;
 }
+
 .title {
   text-align: center;
   font-size: 48px;
@@ -62,6 +60,7 @@ export default class homeIndex extends Vue {
   justify-content: center;
   align-items: center;
   width: 100%;
+
   .el-carousel {
     width: 1440px;
   }

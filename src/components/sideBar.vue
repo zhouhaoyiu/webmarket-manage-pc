@@ -11,12 +11,8 @@
         <button @click="$emit('goPage', 'adminsManage')">管理员管理</button>
         <button @click="$emit('goPage', 'customersManage')">顾客管理</button>
       </div> -->
-      <div
-        class="button"
-        v-for="(button, buttonIndex) in calcButtonArr"
-        :class="getActiveClass(button.strict, button.path)"
-        :key="button.name"
-      >
+      <div class="button" v-for="(button, buttonIndex) in calcButtonArr"
+        :class="getActiveClass(button.strict, button.path)" :key="button.name">
         <button @click="emitGoPage(button.path, buttonIndex)">
           {{ button.name }}
           <!-- {{ getActiveClass(button.strict, button.path) }} -->
@@ -94,7 +90,7 @@ export default class SideBar extends Vue {
       path: "userInfo",
       role: 1,
     },
-     {
+    {
       name: "数据分析",
       path: "dataAnalysis",
       role: 1,
@@ -147,11 +143,12 @@ export default class SideBar extends Vue {
   height: 100%;
   width: 208px;
   z-index: 100;
-  box-shadow: 2px 0 8px 0 rgba(29,35,41,.05);
+  box-shadow: 2px 0 8px 0 rgba(29, 35, 41, .05);
   top: 0;
   left: 0;
   overflow: hidden;
   min-width: 200px;
+
   .info {
     display: flex;
     flex-direction: column;
@@ -159,27 +156,32 @@ export default class SideBar extends Vue {
     align-items: center;
     padding: 20px 0;
     height: 160px;
+
     .info-title {
       margin-bottom: 10px;
       font-size: 20px;
       font-weight: bold;
     }
+
     .info-name {
       margin-bottom: 10px;
       font-size: 16px;
     }
   }
+
   .buttons {
     display: flex;
     width: 100%;
     height: 70%;
     flex-direction: column;
+
     .button {
       display: flex;
       flex-direction: column;
       width: 100%;
       justify-content: space-between;
       margin-top: 5px;
+
       button {
         width: 100%;
         height: 40px;
@@ -193,14 +195,17 @@ export default class SideBar extends Vue {
         cursor: pointer;
       }
     }
+
     .active {
       background: #021146 !important;
       font-weight: bold;
+
       button {
         color: #fff !important;
       }
     }
   }
+
   .sideBar-foot {
     display: flex;
     width: 100%;

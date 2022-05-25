@@ -1,14 +1,7 @@
 <template>
   <div class="home">
-    <side-bar
-      :userName="userName"
-      :identity="identity"
-      @goPage="goPage"
-      @logOut="logOut"
-    ></side-bar>
-    <router-view
-      style="padding: 2% 3%; width: 100%; height: 100%"
-    ></router-view>
+    <side-bar :userName="userName" :identity="identity" @goPage="goPage" @logOut="logOut"></side-bar>
+    <router-view style="padding: 2% 3%; width: 100%; height: 100%"></router-view>
   </div>
 </template>
 

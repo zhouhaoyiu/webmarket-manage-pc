@@ -2,15 +2,9 @@
   <div>
     <Title>用户统计</Title>
     <div style="width: 70%; margin-bottom: 20px; display: flex">
-      <el-input
-        style="width: 30%"
-        v-model="searchUserName"
-        placeholder="请输入用户名"
-      ></el-input>
+      <el-input style="width: 30%" v-model="searchUserName" placeholder="请输入用户名"></el-input>
       <div style="margin-left: 20px">
-        <el-button @click="visitClassification" type="primary"
-          >查看分类</el-button
-        >
+        <el-button @click="visitClassification" type="primary">查看分类</el-button>
         <el-button @click="visitGoods" type="primary">查看商品</el-button>
         <el-button @click="visitAll" type="primary">查看全部</el-button>
       </div>
@@ -23,11 +17,7 @@
           </div>
         </template>
       </el-table-column>
-      <el-table-column
-        align="center"
-        label="访问分类"
-        prop="type"
-      ></el-table-column>
+      <el-table-column align="center" label="访问分类" prop="type"></el-table-column>
       <el-table-column align="center" label="访问内容" prop="gid">
         <template v-slot="scope">
           <div v-if="scope.row.type === '查看分类'">
@@ -38,11 +28,7 @@
           </div>
         </template>
       </el-table-column>
-      <el-table-column
-        align="center"
-        label="访问时间"
-        prop="logtime"
-      ></el-table-column>
+      <el-table-column align="center" label="访问时间" prop="logtime"></el-table-column>
     </el-table>
   </div>
 </template>
@@ -137,4 +123,5 @@ export default class UsersStatistics extends Vue {
 }
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+</style>

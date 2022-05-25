@@ -1,43 +1,21 @@
 <template>
   <div class="regis">
     <div class="regis-wrap">
-      <el-form
-        ref="ruleForm"
-        :rules="rules"
-        :model="formData"
-        label-position="left"
-        label-width="100px"
-      >
+      <el-form ref="ruleForm" :rules="rules" :model="formData" label-position="left" label-width="100px">
         <el-form-item label="用户名" prop="userName">
           <el-input v-model="formData.userName" type="text"></el-input>
         </el-form-item>
         <el-form-item label="密码" prop="passWord">
-          <el-input
-            v-model="formData.passWord"
-            type="passWord"
-            autocomplete="off"
-          ></el-input>
+          <el-input v-model="formData.passWord" type="passWord" autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item label="手机号" prop="phoneNumber">
-          <el-input
-            v-model="formData.phoneNumber"
-            type="text"
-            auto-complete="off"
-          ></el-input>
+          <el-input v-model="formData.phoneNumber" type="text" auto-complete="off"></el-input>
         </el-form-item>
         <el-form-item label="邮箱" prop="emailAddress">
-          <el-input
-            v-model="formData.emailAddress"
-            type="text"
-            auto-complete="off"
-          ></el-input>
+          <el-input v-model="formData.emailAddress" type="text" auto-complete="off"></el-input>
         </el-form-item>
         <el-form-item label="pin码" prop="pin">
-          <el-input
-            v-model="formData.pin"
-            type="passWord"
-            auto-complete="off"
-          ></el-input>
+          <el-input v-model="formData.pin" type="passWord" auto-complete="off"></el-input>
         </el-form-item>
       </el-form>
       <el-button type="primary" @click="adminRegis()">注册管理员</el-button>
@@ -192,6 +170,7 @@ export default class Regis extends Vue {
   height: 100%;
   display: flex;
   background: #282c34;
+
   .regis-wrap {
     display: flex;
     margin: auto;

@@ -8,12 +8,9 @@
       <el-table-column align="center" label="订单商品">
         <template v-slot="scope">
           <div>
-            <div
-              v-for="(goodname, index) in getGoodNames(
-                JSON.parse(scope.row.goods)
-              )"
-              :key="index"
-            >
+            <div v-for="(goodname, index) in getGoodNames(
+              JSON.parse(scope.row.goods)
+            )" :key="index">
               {{ goodname }}
             </div>
           </div>
@@ -38,36 +35,23 @@
       <el-table-column align="center" label="信息">
         <template v-slot="scope">
           {{
-            scope.row.orderStatus === 0
-              ? "未完成"
-              : scope.row.orderStatus === 2
-              ? `备注: ${scope.row.remarks}`
-              : `原因: ${scope.row.refuseReason}`
+              scope.row.orderStatus === 0
+                ? "未完成"
+                : scope.row.orderStatus === 2
+                  ? `备注: ${scope.row.remarks}`
+                  : `原因: ${scope.row.refuseReason}`
           }}
         </template>
       </el-table-column>
       <el-table-column align="center" label="操作">
         <template v-slot="scope">
-          <div
-            v-if="scope.row.orderStatus === 0"
-            style="display: flex; width: 100%"
-          >
-            <el-button
-              @click="acceptOrder(scope.row)"
-              size="mini"
-              round
-              type="primary"
-              style="font-size: 16px !important"
-            >
+          <div v-if="scope.row.orderStatus === 0" style="display: flex; width: 100%">
+            <el-button @click="acceptOrder(scope.row)" size="mini" round type="primary"
+              style="font-size: 16px !important">
               通过
             </el-button>
-            <el-button
-              @click="refuseOrder(scope.row)"
-              round
-              size="mini"
-              type="danger"
-              style="font-size: 16px !important"
-            >
+            <el-button @click="refuseOrder(scope.row)" round size="mini" type="danger"
+              style="font-size: 16px !important">
               拒绝
             </el-button>
           </div>

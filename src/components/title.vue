@@ -1,5 +1,8 @@
 <template>
-  <div class="title"><slot></slot> <el-divider></el-divider></div>
+  <div class="title">
+    <slot></slot>
+    <el-divider></el-divider>
+  </div>
 </template>
 
 <script lang="ts">

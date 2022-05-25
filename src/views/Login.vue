@@ -7,28 +7,11 @@
       </div>
       <div class="password">
         <span>密码 </span>
-        <el-input
-          show-password
-          placeholder="请输入密码"
-          v-model="password"
-        ></el-input>
+        <el-input show-password placeholder="请输入密码" v-model="password"></el-input>
       </div>
       <div class="buttons">
-        <el-button
-          class="login-button"
-          size="medium"
-          type="primary"
-          @click="login()"
-          >登录</el-button
-        >
-        <el-button
-          class="login-button"
-          size="medium"
-          type=""
-          plain
-          @click="regis()"
-          >注册</el-button
-        >
+        <el-button class="login-button" size="medium" type="primary" @click="login()">登录</el-button>
+        <el-button class="login-button" size="medium" type="" plain @click="regis()">注册</el-button>
       </div>
     </div>
   </div>
@@ -95,6 +78,7 @@ export default class Login extends Vue {
   height: 100%;
   display: flex;
   background: #282c34;
+
   .login-wrap {
     display: flex;
     margin: auto;
@@ -117,6 +101,7 @@ export default class Login extends Vue {
       justify-content: center;
       align-items: center;
       margin-bottom: 20px;
+
       span {
         width: 100px;
         line-height: 40px;
@@ -124,6 +109,7 @@ export default class Login extends Vue {
         text-align: left;
       }
     }
+
     .buttons {
       display: flex;
       width: 100%;
@@ -131,6 +117,7 @@ export default class Login extends Vue {
       justify-content: center;
       align-items: center;
       padding-top: 10px;
+
       .login-button {
         width: 100%;
         margin: 10px 0px;

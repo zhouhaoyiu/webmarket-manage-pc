@@ -3,59 +3,21 @@
     <Title>数据分析</Title>
     <div>
       <el-radio-group v-model="echartsDom">
-        <el-radio-button
-          :disabled="orders.length === 0"
-          label="orderCountByTime"
-          >销量/时间</el-radio-button
-        >
-        <el-radio-button
-          :disabled="orders.length === 0"
-          label="orderCountByGood"
-          >销量/商品分类</el-radio-button
-        >
-        <el-radio-button
-          :disabled="userLog.length === 0"
-          label="visitCountByTime"
-          >访问量/时间</el-radio-button
-        >
-        <el-radio-button
-          :disabled="userLog.length === 0"
-          label="visitCountByGoodName"
-          >访问量/商品名称</el-radio-button
-        >
-        <el-radio-button
-          :disabled="userLog.length === 0"
-          label="visitCountByGoodClassification"
-          >访问量/商品分类</el-radio-button
-        >
+        <el-radio-button :disabled="orders.length === 0" label="orderCountByTime">销量/时间</el-radio-button>
+        <el-radio-button :disabled="orders.length === 0" label="orderCountByGood">销量/商品分类</el-radio-button>
+        <el-radio-button :disabled="userLog.length === 0" label="visitCountByTime">访问量/时间</el-radio-button>
+        <el-radio-button :disabled="userLog.length === 0" label="visitCountByGoodName">访问量/商品名称</el-radio-button>
+        <el-radio-button :disabled="userLog.length === 0" label="visitCountByGoodClassification">访问量/商品分类
+        </el-radio-button>
       </el-radio-group>
     </div>
     <div>
-      <div
-        id="echartDomBox"
-        class="orderCountByTime"
-        v-show="echartsDom === 'orderCountByTime'"
-      ></div>
-      <div
-        id="echartDomBox"
-        class="orderCountByGood"
-        v-show="echartsDom === 'orderCountByGood'"
-      ></div>
-      <div
-        id="echartDomBox"
-        class="visitCountByTime"
-        v-show="echartsDom === 'visitCountByTime'"
-      ></div>
-      <div
-        id="echartDomBox"
-        class="visitCountByGoodName"
-        v-show="echartsDom === 'visitCountByGoodName'"
-      ></div>
-      <div
-        id="echartDomBox"
-        class="visitCountByGoodClassification"
-        v-show="echartsDom === 'visitCountByGoodClassification'"
-      ></div>
+      <div id="echartDomBox" class="orderCountByTime" v-show="echartsDom === 'orderCountByTime'"></div>
+      <div id="echartDomBox" class="orderCountByGood" v-show="echartsDom === 'orderCountByGood'"></div>
+      <div id="echartDomBox" class="visitCountByTime" v-show="echartsDom === 'visitCountByTime'"></div>
+      <div id="echartDomBox" class="visitCountByGoodName" v-show="echartsDom === 'visitCountByGoodName'"></div>
+      <div id="echartDomBox" class="visitCountByGoodClassification"
+        v-show="echartsDom === 'visitCountByGoodClassification'"></div>
     </div>
   </div>
 </template>

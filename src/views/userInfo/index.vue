@@ -25,11 +25,7 @@
       <div class="infoBigCard">
         <div class="infoTitle">操作记录</div>
         <div class="infoLogTable">
-          <div
-            class="infoLog"
-            v-for="(log, logIndex) in myLogArray"
-            :key="logIndex"
-          >
+          <div class="infoLog" v-for="(log, logIndex) in myLogArray" :key="logIndex">
             <div class="logTime">{{ log.logTime }}</div>
             <div class="logInfo">{{ log.info }}</div>
             <div class="logRemark">{{ log.remark }}</div>
@@ -40,22 +36,13 @@
         <div class="infoTitle">
           <div>操作分析</div>
           <el-radio-group style="margin-top:10px" v-model="chartsDom">
-            <el-radio-button label="classificationAna"
-              >分类分析</el-radio-button
-            >
+            <el-radio-button label="classificationAna">分类分析</el-radio-button>
             <el-radio-button label="timeAna">时间分析</el-radio-button>
           </el-radio-group>
         </div>
-        <div
-          v-show="chartsDom === 'classificationAna'"
-          id="echartsDom"
-          class="infoAnalysisChartDomClassification"
-        ></div>
-        <div
-          v-show="chartsDom === 'timeAna'"
-          id="echartsDom"
-          class="infoAnalysisChartDomTime"
-        ></div>
+        <div v-show="chartsDom === 'classificationAna'" id="echartsDom" class="infoAnalysisChartDomClassification">
+        </div>
+        <div v-show="chartsDom === 'timeAna'" id="echartsDom" class="infoAnalysisChartDomTime"></div>
       </div>
     </div>
   </div>
@@ -209,6 +196,7 @@ export default class userInfo extends Vue {
   flex-wrap: wrap;
   justify-content: space-between;
   margin-top: 20px;
+
   .infoCard {
     width: 340px;
     height: 190px;
@@ -224,21 +212,25 @@ export default class userInfo extends Vue {
     align-items: center;
     text-align: center;
     justify-content: space-between;
+
     .infoTitle {
       font-size: 32px;
       font-weight: bold;
     }
+
     .infoText {
       font-size: 24px;
       color: #666;
     }
   }
 }
+
 .infoBigList {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
   margin-top: 20px;
+
   .infoBigCard {
     width: 47%;
     height: 450px;
@@ -256,6 +248,7 @@ export default class userInfo extends Vue {
       font-size: 24px;
       font-weight: bold;
     }
+
     .infoLogTable {
       width: 100%;
       height: 300px;
@@ -264,6 +257,7 @@ export default class userInfo extends Vue {
       display: flex;
       flex-direction: column;
       align-items: center;
+
       .infoLog {
         width: 100%;
         display: flex;
@@ -271,16 +265,19 @@ export default class userInfo extends Vue {
         // justify-content: space-between;
         align-items: center;
         margin-top: 10px;
+
         .logTime {
           width: 200px;
           font-size: 18px;
           color: #666;
         }
+
         .logInfo {
           width: 150px;
           font-size: 18px;
           color: #666;
         }
+
         .logRemark {
           width: max-content;
           font-size: 14px;
@@ -288,11 +285,13 @@ export default class userInfo extends Vue {
         }
       }
     }
+
     #echartsDom {
       width: 100%;
       height: 300px;
       top: 10%;
     }
+
     .infoText {
       font-size: 24px;
       color: #666;

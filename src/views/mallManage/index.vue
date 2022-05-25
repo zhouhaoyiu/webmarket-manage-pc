@@ -2,9 +2,7 @@
   <div>
     <Title>商城管理</Title>
     <div>
-      <el-button type="primary" @click="openChangeMallInfo()"
-        >修改商城信息</el-button
-      >
+      <el-button type="primary" @click="openChangeMallInfo()">修改商城信息</el-button>
     </div>
     <div v-if="marketInfo" class="marketInfo">
       <div class="marketInfoTitle">商城信息</div>
@@ -21,56 +19,24 @@
         推荐方式：{{ ShoppingRecommend }}
       </div>
       <div class="marketInfoLine">商城信息：{{ marketInfo.marketMeta }}</div>
-      <div
-        class="marketInfoLine"
-        style="display: flex; flex-direction: column; flex-wrap: wrap"
-      >
+      <div class="marketInfoLine" style="display: flex; flex-direction: column; flex-wrap: wrap">
         <div style="min-width: max-content">首页轮播图：</div>
         <div style="display: flex; flex-wrap: wrap">
-          <div
-            v-for="(image, index) in marketInfo.marketImages.split(',')"
-            :key="index"
-            style="margin-right: 10px"
-          >
-            <img
-              :src="`http://localhost:8090/images/${image}`"
-              width="400"
-              height="200"
-            />
+          <div v-for="(image, index) in marketInfo.marketImages.split(',')" :key="index" style="margin-right: 10px">
+            <img :src="`http://localhost:8090/images/${image}`" width="400" height="200" />
           </div>
         </div>
       </div>
     </div>
-    <el-dialog
-      :title="dialogTitle"
-      :visible.sync="dialogVision"
-      width="800px"
-      :close-on-click-modal="false"
-      :close-on-press-escape="false"
-      :show-close="false"
-    >
-      <el-form
-        ref="form"
-        :model="marketInfoDialog"
-        label-position="left"
-        label-width="120px"
-        style="padding: 0 30px"
-      >
+    <el-dialog :title="dialogTitle" :visible.sync="dialogVision" width="800px" :close-on-click-modal="false"
+      :close-on-press-escape="false" :show-close="false">
+      <el-form ref="form" :model="marketInfoDialog" label-position="left" label-width="120px" style="padding: 0 30px">
         <el-form-item label="商城名称">
           <el-input v-model="marketInfoDialog.marketName"></el-input>
         </el-form-item>
         <el-form-item label="推荐方式">
-          <el-select
-            v-model="marketInfoDialog.marketRecommend"
-            filterable
-            placeholder="请选择"
-          >
-            <el-option
-              v-for="item in options"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value"
-            >
+          <el-select v-model="marketInfoDialog.marketRecommend" filterable placeholder="请选择">
+            <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
             </el-option>
           </el-select>
         </el-form-item>
@@ -78,20 +44,10 @@
           <el-input v-model="marketInfoDialog.marketMeta"></el-input>
         </el-form-item>
         <el-form-item label="商城图片" v-if="!submitStatus">
-          <el-upload
-            class="upload-demo"
-            action="http://localhost:8090/goods/upload/image"
-            ref="marketImageUpload"
-            list-type="picture-card"
-            :auto-upload="false"
-            name="picture"
-            :on-preview="handlePictureCardPreview"
-            :on-remove="handleRemove"
-            :on-success="handleMarketImageSuccess"
-            :before-upload="beforeMarketImageUpload"
-            :file-list="marketImageList"
-            multiple
-          >
+          <el-upload class="upload-demo" action="http://localhost:8090/goods/upload/image" ref="marketImageUpload"
+            list-type="picture-card" :auto-upload="false" name="picture" :on-preview="handlePictureCardPreview"
+            :on-remove="handleRemove" :on-success="handleMarketImageSuccess" :before-upload="beforeMarketImageUpload"
+            :file-list="marketImageList" multiple>
             <i class="el-icon-plus avatar"></i>
           </el-upload>
         </el-form-item>
@@ -99,13 +55,8 @@
       <span slot="footer" class="dialog-footer">
         <el-button @click="submitImage">提交图片</el-button>
         <el-button @click="dialogVision = false" type="danger">取 消</el-button>
-        <el-button
-          :disabled="!submitStatus"
-          type="primary"
-          @click="submitMarketInfo"
-        >
-          确 定</el-button
-        >
+        <el-button :disabled="!submitStatus" type="primary" @click="submitMarketInfo">
+          确 定</el-button>
       </span>
     </el-dialog>
   </div>
@@ -180,7 +131,7 @@ export default class MallManage extends Vue {
       marketMeta: this.marketInfoDialog.marketMeta,
       marketImages: this.sendMarketImageList.toString(),
     });
-    if(res.data.code === 1){
+    if (res.data.code === 1) {
       this.$message.success("修改成功");
       this.dialogVision = false;
       this.resetData();
@@ -233,7 +184,7 @@ export default class MallManage extends Vue {
     let str = "";
     this.options.forEach((item: any) => {
       if (item.value === this.marketInfoDialog.marketRecommend) {
-        str =  item.label;
+        str = item.label;
       }
     });
     return str;
@@ -246,6 +197,7 @@ export default class MallManage extends Vue {
   display: flex;
   flex-direction: row;
 }
+
 .marketInfo {
   font-family: apple-system, BlinkMacSystemFont, segoe ui, Roboto,
     helvetica neue, Arial, noto sans, sans-serif, apple color emoji,
@@ -257,12 +209,14 @@ export default class MallManage extends Vue {
   border-radius: 12px;
   box-shadow: 0 0px 3px 0px rgba(0, 0, 0, 0.1);
   background: rgb(255, 255, 255);
+
   .marketInfoTitle {
     font-size: 18px;
     margin: auto;
     font-weight: bold;
     margin-bottom: 20px;
   }
+
   .marketInfoLine {
     margin-top: 5px;
     margin-bottom: 5px;

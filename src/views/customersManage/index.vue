@@ -3,40 +3,20 @@
     <Title>顾客管理</Title>
     <div>
       <el-table :data="customer">
-        <el-table-column
-          align="center"
-          label="顾客姓名"
-          prop="username"
-        ></el-table-column>
+        <el-table-column align="center" label="顾客姓名" prop="username"></el-table-column>
         <el-table-column align="center" label="顾客性别">
           <template v-slot="scope">
             <div>{{ scope.row.gender ? "男" : "女" }}</div>
           </template>
         </el-table-column>
-        <el-table-column
-          align="center"
-          label="顾客电话"
-          prop="phonenumber"
-        ></el-table-column>
-        <el-table-column
-          align="center"
-          label="顾客uuid"
-          prop="useruuid"
-        ></el-table-column>
-        <el-table-column
-          align="center"
-          label="顾客地址"
-          prop="address"
-        ></el-table-column>
+        <el-table-column align="center" label="顾客电话" prop="phonenumber"></el-table-column>
+        <el-table-column align="center" label="顾客uuid" prop="useruuid"></el-table-column>
+        <el-table-column align="center" label="顾客地址" prop="address"></el-table-column>
         <el-table-column align="center" label="操作" width="180" fixed="right">
           <template v-slot="scope">
             <div>
-              <el-button
-                @click="deleteCustomer(scope.row)"
-                type="text"
-                size="medium"
-                style="font-size: 16px !important"
-              >
+              <el-button @click="deleteCustomer(scope.row)" type="text" size="medium"
+                style="font-size: 16px !important">
                 删除
               </el-button>
             </div>
@@ -70,4 +50,5 @@ export default class CustomersManage extends Vue {
 }
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+</style>
