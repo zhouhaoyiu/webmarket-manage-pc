@@ -6,7 +6,7 @@
       <div class="info-name">{{ identity }}</div>
     </div>
     <div class="buttons">
-      <!-- <div class="button" :style="$route.path ===">
+      <!-- <div class="button" :style="$route.path === undefined">
         <button @click="$emit('goPage', 'userInfo')">个人信息</button>
         <button @click="$emit('goPage', 'adminsManage')">管理员管理</button>
         <button @click="$emit('goPage', 'customersManage')">顾客管理</button>
@@ -30,6 +30,7 @@ import { GET_ADMIN_INFO } from "@/store/type/getter-type";
 import Vue from "vue";
 import { Component, Prop } from "vue-property-decorator";
 import { btn } from "./type";
+
 @Component({
   components: {},
 })

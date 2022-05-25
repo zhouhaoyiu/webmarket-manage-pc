@@ -8,7 +8,7 @@ import store from "@/store";
  * @@returns {Array<object>} 商品分类
  *
  */
-export default async function getGoodsClassification() {
+export default async function getGoodsClassification(): Promise<any> {
   const goodsClassificationTree: any = [];
   const goodsClassificationTreeMap: any = {};
   const res = await axios.get("/goodsClassification/getAllClassfication");
