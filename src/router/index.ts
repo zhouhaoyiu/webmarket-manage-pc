@@ -16,88 +16,63 @@ const routes: Array<RouteConfig> = [
     component: Home,
     children: [
       {
-        path: "/home/index",
-        name: "HomeIndex",
-        component: () => import("../views/homeIndex/index.vue"),
+        path: "index",
+        name: "homeIndex",
+        component: () =>
+          import(/* webpackChunkName: "index" */ "../views/index/index.vue"),
       },
       {
-        path: "/home/mallManage",
-        name: "mallManage",
+        path: "searchAll",
+        name: "searchAll",
         component: () =>
           import(
-            /* webpackChunkName: "mallManage" */ "../views/mallManage/index.vue"
+            /* webpackChunkName: "searchAll" */ "../views/search/searchAll.vue"
           ),
       },
       {
-        path: "/home/ordersManage",
-        name: "ordersManage",
+        path: "searchWaterMeterWell",
+        name: "searchWaterMeterWell",
         component: () =>
           import(
-            /* webpackChunkName: "ordersManage" */ "../views/ordersManage/index.vue"
+            /* webpackChunkName: "searchWaterMeterWell" */ "../views/search/searchWaterMeterWell.vue"
           ),
       },
       {
-        path: "/home/goodsStatistics",
-        name: "goodsStatistics",
+        path: "searchValueWall",
+        name: "searchValueWall",
         component: () =>
           import(
-            /* webpackChunkName: "goodsStatistics" */ "../views/statistics/goodsStatistics.vue"
+            /* webpackChunkName: "searchValueWall" */ "../views/search/searchValueWall.vue"
           ),
       },
       {
-        path: "/home/usersStatistics",
-        name: "usersStatistics",
+        path: "searchFireHydrant",
+        name: "searchFireHydrant",
         component: () =>
           import(
-            /* webpackChunkName: "usersStatistics" */ "../views/statistics/usersStatistics.vue"
+            /* webpackChunkName: "searchFireHydrant" */ "../views/search/searchFireHydrant.vue"
           ),
       },
       {
-        path: "/home/userInfo",
-        name: "userInfo",
+        path: "searchWaterMeterRoom",
+        name: "searchWaterMeterRoom",
         component: () =>
           import(
-            /* webpackChunkName: "userInfo" */ "../views/userInfo/index.vue"
+            /* webpackChunkName: "searchWaterMeterRoom" */ "../views/search/searchWaterMeterRoom.vue"
           ),
       },
       {
-        path: "/home/adminsManage",
-        name: "adminsManage",
+        path: "card",
+        name: "card",
         component: () =>
-          import(
-            /* webpackChunkName: "adminsManage" */ "../views/adminsManage/index.vue"
-          ),
+          import(/* webpackChunkName: "card" */ "../views/card/index.vue"),
       },
       {
-        path: "/home/customersManage",
-        name: "customersManage",
+        path: "InputInfor",
+        name: "InputInfor",
         component: () =>
           import(
-            /* webpackChunkName: "customersManage" */ "../views/customersManage/index.vue"
-          ),
-      },
-      {
-        path: "/home/goodsManage",
-        name: "GoodsManage",
-        component: () =>
-          import(
-            /* webpackChunkName: "goodsManage" */ "../views/goodsManage/index.vue"
-          ),
-      },
-      {
-        path: "/home/goodsClassificationManage",
-        name: "GoodsClassificationManage",
-        component: () =>
-          import(
-            /* webpackChunkName: "goodsClassificationManage" */ "../views/goodsClassificationManage/index.vue"
-          ),
-      },
-      {
-        path: "/home/dataAnalysis",
-        name: "DataAnalysis",
-        component: () =>
-          import(
-            /* webpackChunkName: "dataAnalysis" */ "../views/dataAnalysis/index.vue"
+            /* webpackChunkName: "InputInfor" */ "../views/inputInfor/index.vue"
           ),
       },
     ],
@@ -129,18 +104,18 @@ const routes: Array<RouteConfig> = [
     component: () =>
       import(/* webpackChunkName: "Regis" */ "../views/Regis.vue"),
   },
-  {
-    path: "/404",
-    name: "404",
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "404" */ "../views/404.vue"),
-  },
-  {
-    path: "*",
-    redirect: "/404",
-  },
+  // {
+  //   path: "/404",
+  //   name: "404",
+  //   // route level code-splitting
+  //   // this generates a separate chunk (about.[hash].js) for this route
+  //   // which is lazy-loaded when the route is visited.
+  //   component: () => import(/* webpackChunkName: "404" */ "../views/404.vue"),
+  // },
+  // {
+  //   path: "*",
+  //   redirect: "/404",
+  // },
 ];
 
 const router = new VueRouter({

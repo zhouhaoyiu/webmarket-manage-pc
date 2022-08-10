@@ -6,21 +6,40 @@
       <div class="info-name">{{ identity }}</div>
     </div>
     <div class="buttons">
-      <!-- <div class="button" :style="$route.path === undefined">
-        <button @click="$emit('goPage', 'userInfo')">个人信息</button>
-        <button @click="$emit('goPage', 'adminsManage')">管理员管理</button>
-        <button @click="$emit('goPage', 'customersManage')">顾客管理</button>
-      </div> -->
-      <div class="button" v-for="(button, buttonIndex) in calcButtonArr"
-        :class="getActiveClass(button.strict, button.path)" :key="button.name">
-        <button @click="emitGoPage(button.path, buttonIndex)">
+      <div
+        class="button"
+        v-for="(button, buttonIndex) in calcButtonArr"
+        :key="button.name"
+      >
+        <button
+          :class="index === buttonIndex ? 'active' : ''"
+          @click="emitGoPage(button.path, buttonIndex)"
+          class="button-inside"
+        >
           {{ button.name }}
-          <!-- {{ getActiveClass(button.strict, button.path) }} -->
+          <i
+            v-if="button.children"
+            class="button-inside-svg fas fa-caret-down"
+          ></i>
         </button>
+        <div
+          style="display: flex; flex-direction: column"
+          v-if="index === buttonIndex"
+        >
+          <button
+            @click="emitGoChildPage(childrenBtn.path, childrenBtnIndex)"
+            class="button-child-inside"
+            :class="childrenIndex === childrenBtnIndex ? 'active' : ''"
+            v-for="(childrenBtn, childrenBtnIndex) in button.children"
+            :key="childrenBtnIndex"
+          >
+            {{ childrenBtn.name }}
+          </button>
+        </div>
       </div>
     </div>
     <div class="sideBar-foot">
-      <el-button type="primary" @click="$emit('logOut')">登出</el-button>
+      <el-button type="primary" @click="askLogOut()">登出</el-button>
     </div>
   </div>
 </template>
@@ -40,79 +59,100 @@ export default class SideBar extends Vue {
   @Prop() goPage!: (page: string) => void;
   @Prop() logOut!: () => void;
 
-  public buttonArr = [
+  public index = 0;
+  public childrenIndex = 0;
+
+  public buttonArr: btn[] = [
     {
       name: "首页",
       path: "index",
       role: 1,
     },
     {
-      name: "商城管理",
-      path: "mallManage",
+      name: "查询",
+      role: 1,
+      path: "search",
+      children: [
+        {
+          name: "全部",
+          path: "searchAll",
+          role: 1,
+        },
+        {
+          name: "表井",
+          path: "searchWaterMeterWell",
+          role: 1,
+        },
+        {
+          name: "阀门井",
+          path: "searchValueWall",
+          role: 1,
+        },
+        {
+          name: "水表间",
+          path: "searchWaterMeterRoom",
+          role: 1,
+        },
+        {
+          name: "消防栓",
+          path: "searchFireHydrant",
+          role: 1,
+        },
+      ],
+    },
+    {
+      name: "卡片",
+      path: "card",
       role: 1,
     },
     {
-      name: "管理员管理",
-      path: "adminsManage",
-      role: 0,
-    },
-    {
-      name: "顾客管理",
-      path: "customersManage",
-      role: 1,
-    },
-    {
-      name: "订单管理",
-      path: "ordersManage",
-      role: 1,
-    },
-    {
-      name: "商品管理",
-      path: "goodsManage",
-      role: 1,
-    },
-    {
-      name: "商品分类管理",
-      path: "goodsClassificationManage",
-      role: 1,
-    },
-    {
-      name: "商品统计",
-      path: "goodsStatistics",
-      role: 1,
-    },
-    {
-      name: "用户统计",
-      path: "usersStatistics",
-      role: 1,
-    },
-    {
-      name: "个人信息",
-      path: "userInfo",
-      role: 1,
-    },
-    {
-      name: "数据分析",
-      path: "dataAnalysis",
+      name: "录入",
+      path: "inputInfor",
       role: 1,
     },
   ];
 
   public emitGoPage(path: string, index: number): void {
+    if (!this.buttonArr[index].children) {
+      this.$emit("goPage", path);
+      this.index = index;
+      console.log(this.index);
+    } else {
+      if (this.index !== index) {
+        if (this.buttonArr[index].children!.length > 0) {
+          this.$emit("goPage", this.buttonArr[index].children![0].path);
+        }
+        this.index = index;
+        this.setChildrenIndex(0);
+      }
+    }
+  }
+  public emitGoChildPage(path: string, index: number): void {
     this.$emit("goPage", path);
+    this.setChildrenIndex(index);
   }
 
-  public getActiveClass(
-    strict = false,
-    path: string
-  ): { active: boolean } | string {
-    if (this.routePath === (strict ? path.split("/")[1] : path)) {
-      return {
-        active: true,
-      };
-    } else {
-      return "";
-    }
+  public setIndex(index: number): void {
+    this.index = index;
+  }
+  public setChildrenIndex(index: number): void {
+    this.childrenIndex = index;
+  }
+
+  public askLogOut(): void {
+    this.$confirm("请确认是否登出系统?", "提示", {
+      confirmButtonText: "确定",
+      cancelButtonText: "取消",
+      type: "warning",
+    })
+      .then(() => {
+        this.$message({
+          type: "success",
+          message: "退出成功!",
+        });
+        this.$emit("logOut");
+      })
+      .catch(() => {});
   }
 
   get routePath(): string {
@@ -125,13 +165,13 @@ export default class SideBar extends Vue {
     });
   }
 
-  mounted(): void {
-    if (localStorage.getItem("page")) {
-      this["$router"].push(`/home/${localStorage.getItem("page")}`);
-    } else {
-      this["$router"].push("/home/index");
-    }
-  }
+  // mounted(): void {
+  //   if (localStorage.getItem("page")) {
+  //     this["$router"].push(`/home/${localStorage.getItem("page")}`);
+  //   } else {
+  //     this["$router"].push("/home/index");
+  //   }
+  // }
 }
 </script>
 
@@ -144,7 +184,7 @@ export default class SideBar extends Vue {
   height: 100%;
   width: 208px;
   z-index: 100;
-  box-shadow: 2px 0 8px 0 rgba(29, 35, 41, .05);
+  box-shadow: 2px 0 8px 0 rgba(29, 35, 41, 0.05);
   top: 0;
   left: 0;
   overflow: hidden;
@@ -155,8 +195,8 @@ export default class SideBar extends Vue {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding: 20px 0;
-    height: 160px;
+    padding: 15px 0;
+    height: 120px;
 
     .info-title {
       margin-bottom: 10px;
@@ -173,7 +213,7 @@ export default class SideBar extends Vue {
   .buttons {
     display: flex;
     width: 100%;
-    height: 70%;
+    height: 80%;
     flex-direction: column;
 
     .button {
@@ -181,16 +221,36 @@ export default class SideBar extends Vue {
       flex-direction: column;
       width: 100%;
       justify-content: space-between;
-      margin-top: 5px;
+      margin-bottom: 10px;
 
-      button {
+      .button-inside {
+        position: relative;
         width: 100%;
         height: 40px;
         border: none;
         background-color: transparent;
         // border-top: 1px solid brown;
-        border-top: 1px solid #021146;
-        border-bottom: 1px solid #021146;
+        border-top: 1px solid var(--primary-color);
+        border-bottom: 1px solid var(--primary-color);
+        color: black;
+        font-size: 14px;
+        cursor: pointer;
+
+        .button-inside-svg {
+          position: absolute;
+          right: 20px;
+          top: 50%;
+          transform: translateY(-50%);
+        }
+      }
+
+      .button-child-inside {
+        margin: 10px auto 0 auto;
+        width: 80%;
+        height: 35px;
+        border: 1px solid var(--primary-color);
+        border-radius: 12px;
+        background-color: transparent;
         color: black;
         font-size: 14px;
         cursor: pointer;
@@ -198,12 +258,9 @@ export default class SideBar extends Vue {
     }
 
     .active {
-      background: #021146 !important;
+      background: var(--primary-color) !important;
       font-weight: bold;
-
-      button {
-        color: #fff !important;
-      }
+      color: #fff !important;
     }
   }
 

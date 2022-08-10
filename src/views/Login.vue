@@ -1,6 +1,9 @@
 <template>
   <div class="login">
     <div class="login-wrap">
+      <div class="logo">
+        <img :src="require('../assets/tygs.png')" alt="">
+      </div>
       <div class="username">
         <span>用户名</span>
         <el-input v-model="username" placeholder="请输入用户名"></el-input>
@@ -83,7 +86,7 @@ export default class Login extends Vue {
     display: flex;
     margin: auto;
     width: 500px;
-    height: 350px;
+    height: 500px;
     padding: 50px 100px;
     border: 1px solid #333;
     border-radius: 10px;
@@ -91,6 +94,13 @@ export default class Login extends Vue {
     justify-content: center;
     align-items: center;
     background: whitesmoke;
+    .logo{
+      img{
+        width: 200px;
+        height: 200px;
+      }
+      margin: 20px;
+    }
 
     .username,
     .password {
